@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { company } from '../../data/company'
 import { track } from '../../lib/analytics'
+import { asset } from '../../lib/assets'
 import { whatsappUrl } from '../../lib/enquiry'
 import { paintQr } from '../../lib/qr'
 
@@ -49,7 +50,7 @@ export function ActionDock() {
   useEffect(() => {
     if (!open || !showQr || !pageUrl || !canvasRef.current) return
     let cancelled = false
-    paintQr(canvasRef.current, pageUrl, company.logo.webp)
+    paintQr(canvasRef.current, pageUrl, asset(company.logo.webp))
       .then(() => {
         if (!cancelled) setQrReady(true)
       })
@@ -139,7 +140,7 @@ export function ActionDock() {
         </Link>
       )}
       <a
-        href="/brochure/j-homes-brochure.pdf"
+        href={asset('/brochure/j-homes-brochure.pdf')}
         download="J-Homes-Brochure.pdf"
         className="dock-btn"
         data-cursor="explore"

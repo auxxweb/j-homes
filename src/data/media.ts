@@ -1,3 +1,5 @@
+import { asset } from '../lib/assets'
+
 export interface Frame {
   src: string
   alt: string
@@ -6,7 +8,7 @@ export interface Frame {
 }
 
 function frame(src: string, alt: string, width: number, height: number): Frame {
-  return { src, alt, width, height }
+  return { src: asset(src), alt, width, height }
 }
 
 export const journeyMedia = [

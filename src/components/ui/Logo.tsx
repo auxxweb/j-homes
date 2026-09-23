@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
 import { company } from '../../data/company'
+import { asset } from '../../lib/assets'
 
 export function Logo({ className = 'h-16 w-auto' }: { className?: string }) {
   return (
     <picture>
-      <source srcSet={company.logo.webp} type="image/webp" />
+      <source srcSet={asset(company.logo.webp)} type="image/webp" />
       <img
-        src={company.logo.png}
+        src={asset(company.logo.png)}
         alt=""
         width={company.logo.width}
         height={company.logo.height}

@@ -1,7 +1,11 @@
-import { readFileSync, writeFileSync, existsSync } from 'node:fs'
+import { copyFileSync, readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 const root = resolve(import.meta.dirname, '..')
+const indexPath = resolve(root, 'dist/index.html')
+if (existsSync(indexPath)) {
+  copyFileSync(indexPath, resolve(root, 'dist/404.html'))
+}
 const envPath = resolve(root, '.env')
 let siteUrl = process.env.VITE_SITE_URL ?? ''
 
