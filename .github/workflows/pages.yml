@@ -31,6 +31,14 @@ jobs:
         env:
           VITE_BASE: /j-homes/
           VITE_SITE_URL: https://auxxweb.github.io/j-homes
+          VITE_PHONE: ${{ secrets.VITE_PHONE }}
+          VITE_PHONE_DISPLAY: ${{ secrets.VITE_PHONE_DISPLAY }}
+          VITE_EMAIL: ${{ secrets.VITE_EMAIL }}
+          VITE_WHATSAPP: ${{ secrets.VITE_WHATSAPP }}
+          VITE_INSTAGRAM: ${{ secrets.VITE_INSTAGRAM }}
+          VITE_FACEBOOK: ${{ secrets.VITE_FACEBOOK }}
+          VITE_ENQUIRY_ENDPOINT: ${{ secrets.VITE_ENQUIRY_ENDPOINT }}
+          VITE_GA_ID: ${{ secrets.VITE_GA_ID }}
         run: npm run build
       - name: Upload the site
         uses: actions/upload-pages-artifact@v3
