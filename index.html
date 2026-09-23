@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#F3F0EA" />
+    <meta
+      name="description"
+      content="J Homes provides residential construction, architectural design, interiors and complete turnkey home solutions across Kochi, Ernakulam and Kerala."
+    />
+    <link rel="icon" type="image/png" href="/brand/favicon.png" />
+    <link rel="apple-touch-icon" href="/brand/j-homes-mark.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>J Homes | House Construction &amp; Turnkey Solutions in Kochi, Kerala</title>
+    <style>
+      #preloader {
+        position: fixed;
+        inset: 0;
+        z-index: 70;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+        margin: 0;
+        background: #f3f0ea;
+        color: #161412;
+      }
+      #preloader p {
+        margin: 0;
+      }
+      #preloader p:first-child {
+        font-family: "Cormorant Garamond", "Palatino Linotype", serif;
+        font-size: 2.6rem;
+        line-height: 1;
+        letter-spacing: -0.03em;
+      }
+      #preloader p:last-child {
+        font-family: Manrope, "Segoe UI", sans-serif;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #5e5852;
+      }
+    </style>
+    <meta property="og:title" content="J Homes | House Construction &amp; Turnkey Solutions in Kochi, Kerala" />
+    <meta
+      property="og:description"
+      content="J Homes provides residential construction, architectural design, interiors and complete turnkey home solutions across Kochi, Ernakulam and Kerala."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="J Homes" />
+    <meta property="og:locale" content="en_IN" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <div id="preloader">
+      <p>J HOMES</p>
+      <p>Design · Construction · Interiors</p>
+    </div>
+    <div id="root"></div>
+    <noscript>
+      <p>
+        J Homes designs, builds and finishes homes across Kochi, Ernakulam and Kerala.
+        Enable JavaScript to explore the site.
+      </p>
+    </noscript>
+    <script>
+      setTimeout(function () {
+        var node = document.getElementById('preloader')
+        if (node) node.remove()
+      }, 12000)
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

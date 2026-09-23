@@ -1,0 +1,75 @@
+.passage-draw {
+  fill: none;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: passage-draw 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.passage-lintel {
+  animation-delay: 0.28s;
+  animation-duration: 0.38s;
+}
+
+.passage-sill {
+  animation-delay: 0.46s;
+  animation-duration: 0.32s;
+}
+
+.passage-word {
+  opacity: 0;
+  animation: passage-word 0.35s ease forwards;
+}
+
+.passage-root.is-leaving {
+  animation: passage-lift 0.46s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.passage-root.is-reduced .passage-draw,
+.passage-root.is-reduced .passage-word {
+  animation: none;
+  stroke-dashoffset: 0;
+  opacity: 1;
+}
+
+.passage-root.is-reduced.is-leaving {
+  animation: passage-fade 0.2s ease forwards;
+}
+
+@keyframes passage-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes passage-word {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes passage-lift {
+  to {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+@keyframes passage-fade {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .passage-draw,
+  .passage-word {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+
+  .passage-root.is-leaving {
+    animation: passage-fade 0.2s ease forwards;
+  }
+}

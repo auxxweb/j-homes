@@ -1,0 +1,71 @@
+.loader-root {
+  clip-path: inset(0% 0% 0% 0%);
+}
+
+.loader-scene svg {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.loader-root [data-draw] {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.loader-root:not(.is-static) [data-build] {
+  opacity: 0;
+}
+
+.loader-root:not(.is-static) [data-loader='finale'] {
+  opacity: 0;
+}
+
+.loader-root.is-static [data-draw] {
+  stroke-dashoffset: 0 !important;
+}
+
+.loader-root.is-static [data-build] {
+  opacity: 1 !important;
+  clip-path: none !important;
+}
+
+.loader-root.is-static [data-part='glow'] {
+  opacity: 0.72 !important;
+}
+
+.loader-root.is-static [data-loader='intro'],
+.loader-root.is-static [data-loader='phase'] {
+  opacity: 0;
+}
+
+.loader-root.is-static [data-loader='finale'],
+.loader-root.is-static [data-loader='evening'] {
+  opacity: 1;
+}
+
+.loader-root.is-static [data-loader='finale-rule'] {
+  transform: none;
+}
+
+.loader-root.is-gone {
+  visibility: hidden !important;
+}
+
+@media (max-width: 1023px) {
+  .loader-root [data-tier='fine'] {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-root [data-draw] {
+    stroke-dashoffset: 0 !important;
+  }
+
+  .loader-root [data-build] {
+    opacity: 1 !important;
+    clip-path: none !important;
+  }
+}
