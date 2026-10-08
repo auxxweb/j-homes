@@ -29,8 +29,8 @@ jobs:
         run: npm ci
       - name: Build the site
         env:
-          VITE_BASE: /j-homes/
-          VITE_SITE_URL: https://auxxweb.github.io/j-homes
+          VITE_BASE: /
+          VITE_SITE_URL: https://www.jhomes.in
           VITE_PHONE: ${{ secrets.VITE_PHONE }}
           VITE_PHONE_DISPLAY: ${{ secrets.VITE_PHONE_DISPLAY }}
           VITE_EMAIL: ${{ secrets.VITE_EMAIL }}
