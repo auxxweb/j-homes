@@ -116,20 +116,20 @@ export const drawings = [
 
 export const approvalFlow = [
   {
-    title: 'Plan',
-    text: 'The brief and the site become a set of drawings the rest of the work can share.',
+    title: 'Discuss and plan',
+    text: 'The work starts with the client. From that conversation, a plan is drawn for the house.',
   },
   {
-    title: 'Engineering',
-    text: 'Structure and services are resolved against those drawings, not beside them.',
+    title: 'K-SMART upload',
+    text: 'The plan is uploaded on the K-SMART portal for the authority.',
   },
   {
     title: 'Approval',
-    text: 'Submissions are coordinated with the authority process, including K-SMART where that is the route.',
+    text: 'The submission is taken through approval before the site begins.',
   },
   {
     title: 'Execution',
-    text: 'Construction follows the coordinated set, stage by stage, through to finishing.',
+    text: 'The house is built from the approved plan, stage by stage.',
   },
 ] as const
 

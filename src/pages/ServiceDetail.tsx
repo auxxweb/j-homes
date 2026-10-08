@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { ClosingCta, PageHero } from '../components/layout/PageHero'
 import { Seo } from '../components/layout/Seo'
 import { Container } from '../components/ui/SectionLabel'
-import { getService, services } from '../data/services'
+import { getService, serviceSteps } from '../data/services'
 import { absoluteUrl, breadcrumbLd, graphLd } from '../lib/seo'
 import NotFound from './NotFound'
 
@@ -16,7 +16,7 @@ export default function ServiceDetail() {
     { name: 'Services', path: '/services' },
     { name: service.title, path: `/services/${service.slug}` },
   ]
-  const others = services.filter((item) => item.slug !== service.slug).slice(0, 3)
+  const others = serviceSteps.filter((item) => item.slug !== service.slug).slice(0, 3)
 
   return (
     <>
@@ -38,7 +38,6 @@ export default function ServiceDetail() {
         ])}
       />
       <PageHero
-        index="02"
         kicker="Service"
         title={service.headline}
         lede={service.lede}

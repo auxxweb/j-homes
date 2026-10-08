@@ -37,7 +37,10 @@ jobs:
           VITE_WHATSAPP: ${{ secrets.VITE_WHATSAPP }}
           VITE_INSTAGRAM: ${{ secrets.VITE_INSTAGRAM }}
           VITE_FACEBOOK: ${{ secrets.VITE_FACEBOOK }}
-          VITE_ENQUIRY_ENDPOINT: ${{ secrets.VITE_ENQUIRY_ENDPOINT }}
+          VITE_ENQUIRY_ENDPOINT: https://script.google.com/macros/s/AKfycbzQvzLXoUHsKT0R6Rb9omDG5MpwoEbmKjb1kp1FB7WsZBlBaZAmc_FmUcC3Bk1DXej5/exec
+          VITE_CHECKLIST_ENDPOINT: https://script.google.com/macros/s/AKfycbw8LV8rXrezJb__YgMQ1SDz37iDzKnfZGbKI45elmPhkCRMXWYw_pz5eRpALlceN_1wWQ/exec
+          VITE_CHECKLIST_TOKEN: PASTE_A_LONG_RANDOM_TOKEN
+          VITE_JOURNAL_ENDPOINT: https://script.google.com/macros/s/AKfycbxlEkOakBkJKfH-tRqynVJMw44MR3pT-WT9IxYjE8DQVtUkK1oBUCCCKVn3JU0Ytfra/exec
           VITE_GA_ID: ${{ secrets.VITE_GA_ID }}
         run: npm run build
       - name: Upload the site

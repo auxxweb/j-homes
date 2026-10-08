@@ -3,11 +3,11 @@ import { processSteps } from '../../data/story'
 import { Photo } from '../ui/Photo'
 import { Container, SectionLabel } from '../ui/SectionLabel'
 
-export function ProcessTimeline({ index = '13' }: { index?: string }) {
+export function ProcessTimeline() {
   return (
     <section id="process" className="border-t border-line bg-paper">
       <Container className="py-20 md:py-28">
-        <SectionLabel index={index} label="Process" />
+        <SectionLabel label="Process" />
         <h2 className="display-2 mt-5 max-w-3xl">A calm sequence.</h2>
         <ol className="mt-16">
           {processSteps.map((step, index) => (

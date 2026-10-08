@@ -7,7 +7,7 @@ export function Land() {
     <section id="land" className="border-t border-line bg-paper">
       <Container className="grid gap-14 py-20 md:py-28 lg:grid-cols-12 lg:items-start">
         <div className="lg:col-span-6">
-          <SectionLabel index="04" label="Land" />
+          <SectionLabel label="Land" />
           <h2 className="display-2 mt-5">Start with the right land.</h2>
           <p className="mt-6 max-w-md text-lg text-ink-soft">
             Before a line is drawn, the site has to make sense. J Homes looks at the plot with you — access, the ground, and whether it can carry the home you want.

@@ -1,10 +1,10 @@
-import { useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { formatCent, formatSqFt, projects } from '../../data/projects'
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion'
 import { useHorizontalPin } from '../../hooks/useScrollAnimation'
+import { ImageViewer } from '../ui/ImageViewer'
 import { SectionLabel } from '../ui/SectionLabel'
-import { ProjectPlate } from './ProjectPlate'
 
 export function ProjectShowcase() {
   const pinRef = useRef<HTMLDivElement>(null)
@@ -12,6 +12,9 @@ export function ProjectShowcase() {
   const reduced = usePrefersReducedMotion()
   const pinned = !reduced
   const [active, setActive] = useState(0)
+  const [open, setOpen] = useState<number | null>(null)
+  const close = useCallback(() => setOpen(null), [])
+  const frames = projects.flatMap((project) => project.images)
 
   useHorizontalPin(pinRef, trackRef, pinned, (progress) => {
     const next = Math.round(progress * (projects.length - 1))
@@ -22,7 +25,7 @@ export function ProjectShowcase() {
     <section id="projects" className="border-t border-line bg-paper">
       <div ref={pinRef} className={pinned ? 'rail-pin relative flex flex-col overflow-hidden pt-[4.75rem]' : 'relative'}>
         <div className="mx-auto w-full max-w-[1440px] shrink-0 px-5 pt-8 pb-5 md:px-10 lg:px-16">
-          <SectionLabel index="10" label="Projects" />
+          <SectionLabel label="Projects" />
           <div className="mt-4 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <h2 className="display-2 max-w-4xl">Homes we’ve brought to life.</h2>
             <p className="max-w-sm text-ink-soft">
@@ -69,15 +72,30 @@ export function ProjectShowcase() {
                       View project
                     </Link>
                   </div>
-                  <div className="h-40 w-full border border-line bg-paper-deep sm:h-52 lg:h-auto lg:w-[54%] lg:max-h-[38vh] lg:self-stretch">
-                    <ProjectPlate project={project} />
-                  </div>
+                  <button
+                    type="button"
+                    className="h-40 w-full overflow-hidden border border-line bg-paper-deep sm:h-52 lg:h-auto lg:w-[54%] lg:max-h-[38vh] lg:self-stretch"
+                    data-cursor="view"
+                    aria-label={`Expand the ${project.location} image`}
+                    onClick={() => setOpen(index)}
+                  >
+                    {project.images[0] && (
+                      <img
+                        src={project.images[0].src}
+                        alt={project.images[0].alt}
+                        width={project.images[0].width}
+                        height={project.images[0].height}
+                        className="h-full w-full object-cover"
+                      />
+                    )}
+                  </button>
                 </article>
               )
             })}
           </div>
         </div>
       </div>
+      {open !== null && <ImageViewer images={frames} index={open} onChange={setOpen} onClose={close} />}
     </section>
   )
 }

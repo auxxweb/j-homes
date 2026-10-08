@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { company } from '../../data/company'
 import { footerNav } from '../../data/navigation'
-import { services } from '../../data/services'
+import { serviceSteps } from '../../data/services'
 import { LogoLink } from '../ui/Logo'
 
 export function Footer() {
@@ -14,7 +14,7 @@ export function Footer() {
           <p className="label mt-6 !text-paper/60">{company.tagline}</p>
           <p className="mt-8 max-w-sm text-sm leading-relaxed text-paper/75">
             Complete turnkey construction and interior solutions for homes in {company.area.city},{' '}
-            {company.area.district} and {company.area.region}.
+            {company.area.district}, <span className="text-crimson">Mulanthuruthy</span> and {company.area.region}.
           </p>
         </div>
         <nav aria-label="Footer" className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:col-span-7">
@@ -33,7 +33,7 @@ export function Footer() {
           <div>
             <p className="label !text-paper/50">Services</p>
             <ul className="mt-4 space-y-2">
-              {services.map((service) => (
+              {serviceSteps.map((service) => (
                 <li key={service.slug}>
                   <Link to={`/services/${service.slug}`} className="text-sm hover:text-white" data-cursor="explore">
                     {service.title}
@@ -48,6 +48,8 @@ export function Footer() {
               {company.area.city}
               <br />
               {company.area.district}
+              <br />
+              <span className="text-crimson">Mulanthuruthy</span>
               <br />
               {company.area.region}
             </p>

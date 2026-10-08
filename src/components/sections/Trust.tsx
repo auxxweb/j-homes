@@ -38,7 +38,7 @@ export function Trust() {
   return (
     <section className="border-t border-line bg-paper" aria-label="Experience">
       <Container className="py-20 md:py-28">
-        <SectionLabel index="02" label="Trust" />
+        <SectionLabel label="Trust" />
         <h2 className="display-2 mt-5 max-w-4xl">Built on experience.</h2>
         <dl className="mt-16 grid gap-12 border-t border-line pt-10 md:grid-cols-3 md:gap-0">
           <div className="md:border-r md:border-line md:pr-10" aria-label="10 plus years of experience">
@@ -50,7 +50,7 @@ export function Trust() {
               <p className="label mt-4">Years of experience</p>
             </dd>
           </div>
-          <div className="md:border-r md:border-line md:px-10" aria-label="50 plus completed projects">
+          <div className="md:border-r md:border-line md:px-10" aria-label="100 plus completed projects">
             <dt className="sr-only">Completed projects</dt>
             <dd>
               <p className="numeral" aria-hidden="true">

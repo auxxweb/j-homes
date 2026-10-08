@@ -8,7 +8,7 @@ export function Furniture() {
     <section id="furniture" className="border-t border-line bg-paper-deep">
       <Container className="grid gap-12 py-20 md:py-28 lg:grid-cols-12">
         <div className="lg:col-span-7">
-          <SectionLabel index="08" label="Furniture" />
+          <SectionLabel label="Furniture" />
           <h2 className="display-2 mt-5">Then, make it yours.</h2>
           <p className="mt-6 max-w-md text-lg text-ink-soft">
             Furnishing is part of the finish, not a shopping list after handover. The pieces are chosen for rooms that already have a plan.

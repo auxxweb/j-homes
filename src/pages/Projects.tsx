@@ -1,12 +1,16 @@
+import { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ClosingCta, PageHero } from '../components/layout/PageHero'
 import { Seo } from '../components/layout/Seo'
-import { ProjectPlate } from '../components/projects/ProjectPlate'
+import { ImageViewer } from '../components/ui/ImageViewer'
 import { Container } from '../components/ui/SectionLabel'
 import { formatCent, formatSqFt, projects } from '../data/projects'
 import { breadcrumbLd, graphLd, organizationLd } from '../lib/seo'
 
 export default function Projects() {
+  const [open, setOpen] = useState<number | null>(null)
+  const close = useCallback(() => setOpen(null), [])
+  const frames = projects.flatMap((project) => project.images)
   const crumbs = [
     { name: 'Home', path: '/' },
     { name: 'Projects', path: '/projects' },
@@ -20,10 +24,9 @@ export default function Projects() {
         jsonLd={graphLd([organizationLd(), breadcrumbLd(crumbs)])}
       />
       <PageHero
-        index="01"
         kicker="Projects"
         title="Homes we’ve brought to life."
-        lede="Each record lists the place, the floors, the built-up area and the land. Diagrams are studies from those facts, not construction drawings."
+        lede="Each record lists the place, the floors, the built-up area and the land. Open an image to see it larger."
         crumbs={[
           { label: 'Home', to: '/' },
           { label: 'Projects' },
@@ -54,14 +57,29 @@ export default function Projects() {
                   View project
                 </Link>
               </div>
-              <div className="border border-line bg-paper-deep">
-                <ProjectPlate project={project} view={index % 3 === 1 ? 'plan' : index % 3 === 2 ? 'section' : 'elevation'} />
-              </div>
+              <button
+                type="button"
+                className="aspect-[4/3] w-full overflow-hidden border border-line bg-paper-deep"
+                data-cursor="view"
+                aria-label={`Expand the ${project.location} image`}
+                onClick={() => setOpen(index)}
+              >
+                {project.images[0] && (
+                  <img
+                    src={project.images[0].src}
+                    alt={project.images[0].alt}
+                    width={project.images[0].width}
+                    height={project.images[0].height}
+                    className="h-full w-full object-cover"
+                  />
+                )}
+              </button>
             </Container>
           </article>
         ))}
       </section>
       <ClosingCta />
+      {open !== null && <ImageViewer images={frames} index={open} onChange={setOpen} onClose={close} />}
     </>
   )
 }

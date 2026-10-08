@@ -5,7 +5,7 @@ export function Quality() {
   return (
     <section id="quality" className="border-t border-line bg-paper">
       <Container className="py-20 md:py-28">
-        <SectionLabel index="09" label="Quality" />
+        <SectionLabel label="Quality" />
         <h2 className="display-2 mt-5 max-w-4xl">Quality is built into the process.</h2>
         <ol className="mt-14 grid gap-px bg-line sm:grid-cols-2 lg:grid-cols-3">
           {qualityPoints.map((point, index) => (

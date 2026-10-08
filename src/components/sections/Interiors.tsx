@@ -9,7 +9,7 @@ export function Interiors() {
     <section id="interiors" className="border-t border-line bg-paper py-20 md:py-28">
       <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-6 px-5 md:flex-row md:items-end md:justify-between md:px-10 lg:px-16">
         <div>
-          <SectionLabel index="08" label="Interiors" />
+          <SectionLabel label="Interiors" />
           <h2 className="display-2 mt-5 max-w-3xl">Inside the house, with the same team.</h2>
         </div>
         <Link to="/services/interior-design" className="label text-crimson" data-cursor="explore">

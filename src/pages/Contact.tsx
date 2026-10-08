@@ -22,7 +22,6 @@ export default function Contact() {
         jsonLd={graphLd([organizationLd(), breadcrumbLd(crumbs)])}
       />
       <PageHero
-        index="01"
         kicker="Contact"
         title="Let’s build your home."
         lede="Tell us where you are in your journey. We’ll help you understand the next step."
@@ -37,35 +36,118 @@ export default function Contact() {
             <ContactForm />
           </div>
           <aside className="lg:col-span-5">
-            <p className="label">Service area</p>
+            <dl className="space-y-6">
+              <div>
+                <dt className="label">Gmail</dt>
+                <dd className="mt-2">
+                  <a className="break-all hover:text-crimson" href={`mailto:${company.contact.email}`}>
+                    {company.contact.email}
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="label">Instagram</dt>
+                <dd className="mt-2">
+                  <a
+                    className="hover:text-crimson"
+                    href={company.contact.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {company.contact.instagramName}
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="label">Facebook</dt>
+                <dd className="mt-2">
+                  {company.contact.facebook ? (
+                    <a className="hover:text-crimson" href={company.contact.facebook} target="_blank" rel="noopener noreferrer">
+                      {company.contact.facebookName}
+                    </a>
+                  ) : (
+                    company.contact.facebookName
+                  )}
+                </dd>
+              </div>
+              <div>
+                <dt className="label">WhatsApp Business</dt>
+                <dd className="mt-2">
+                  {wa ? (
+                    <a
+                      className="hover:text-crimson"
+                      href={wa}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => track('whatsapp_click')}
+                    >
+                      {company.contact.phoneDisplay}
+                    </a>
+                  ) : (
+                    company.contact.phoneDisplay
+                  )}
+                </dd>
+              </div>
+              <div>
+                <dt className="label">Address</dt>
+                <dd>
+                  <address className="mt-2 text-sm leading-relaxed text-ink-soft not-italic">
+                    {company.contact.address.map((line) => (
+                      <span key={line} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </address>
+                </dd>
+              </div>
+              <div>
+                <dt className="label">Phone Number</dt>
+                <dd className="mt-2">
+                  <a className="hover:text-crimson" href={`tel:+${company.contact.phone.replace(/[^\d]/g, '')}`}>
+                    {company.contact.phoneDisplay}
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="label">Location</dt>
+                <dd className="mt-2">
+                  <a
+                    className="break-all text-sm text-crimson"
+                    href={company.contact.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {company.contact.mapUrl}
+                  </a>
+                  <div className="relative mt-4 border border-line">
+                    <iframe
+                      title="J Homes, Mulanthuruthy"
+                      src={company.contact.mapEmbed}
+                      className="pointer-events-none h-64 w-full md:h-80"
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
+                    <a
+                      href={company.contact.mapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute inset-0"
+                      aria-label="Open J Homes on Google Maps"
+                    />
+                  </div>
+                </dd>
+              </div>
+            </dl>
+            <p className="label mt-10">Service area</p>
             <p className="mt-3 font-serif text-3xl">
               {company.area.city}
               <br />
               {company.area.district}
               <br />
+              <span className="text-crimson">Mulanthuruthy</span>
+              <br />
               {company.area.region}
             </p>
-            {company.contact.phoneDisplay && (
-              <a className="mt-6 block" href={`tel:${company.contact.phone}`}>
-                {company.contact.phoneDisplay}
-              </a>
-            )}
-            {company.contact.email && (
-              <a className="mt-2 block" href={`mailto:${company.contact.email}`}>
-                {company.contact.email}
-              </a>
-            )}
-            {wa && (
-              <a
-                href={wa}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="label mt-8 inline-block text-crimson"
-                onClick={() => track('whatsapp_click')}
-              >
-                WhatsApp J Homes
-              </a>
-            )}
             <p className="mt-8 text-sm text-muted">{company.promise}</p>
           </aside>
         </Container>

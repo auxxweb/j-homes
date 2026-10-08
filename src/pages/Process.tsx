@@ -17,7 +17,6 @@ export default function ProcessPage() {
         jsonLd={graphLd([organizationLd(), breadcrumbLd(crumbs)])}
       />
       <PageHero
-        index="01"
         kicker="Process"
         title="From the first conversation to the keys."
         lede="Seven steps. The same team. Nothing in the sequence is there for decoration — each one prepares the next."
@@ -26,7 +25,7 @@ export default function ProcessPage() {
           { label: 'Process' },
         ]}
       />
-      <ProcessTimeline index="02" />
+      <ProcessTimeline />
       <ClosingCta />
     </>
   )

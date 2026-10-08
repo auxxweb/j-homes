@@ -7,5 +7,9 @@ interface ImportMetaEnv {
   readonly VITE_INSTAGRAM?: string
   readonly VITE_FACEBOOK?: string
   readonly VITE_ENQUIRY_ENDPOINT?: string
+  readonly VITE_CHECKLIST_ENDPOINT?: string
+  readonly VITE_CHECKLIST_TOKEN?: string
+  readonly VITE_JOURNAL_SHEET_ID?: string
+  readonly VITE_JOURNAL_ENDPOINT?: string
   readonly VITE_GA_ID?: string
 }

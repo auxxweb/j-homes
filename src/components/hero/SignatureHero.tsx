@@ -192,7 +192,7 @@ export function SignatureHero() {
     <section ref={rootRef} className={reduced ? 'relative bg-paper' : 'relative h-[460svh] bg-paper'} aria-label="From an idea to a finished home">
       <div className="sticky top-0 flex h-[100dvh] flex-col overflow-hidden lg:block lg:h-[100svh]">
         <div className="hero-stage relative z-10 flex shrink-0 flex-col items-center gap-3 px-5 pt-20 pb-3 text-center md:px-10 lg:absolute lg:top-28 lg:bottom-8 lg:left-0 lg:h-auto lg:w-[min(46%,40rem)] lg:items-start lg:justify-center lg:px-12 lg:pt-0 lg:pb-0 lg:text-left xl:px-16">
-          <p className="label">{reduced ? '01 / The idea' : `${heroFrames[frame].key} / ${heroFrames[frame].title}`}</p>
+          <p className="label">{reduced ? 'The idea' : heroFrames[frame].title}</p>
           <HeroCopy frame={reduced ? 0 : frame} reduced={reduced} />
           <Actions />
         </div>

@@ -55,13 +55,21 @@ export function ContactForm() {
     event.preventDefault()
     setPending(true)
     const result = await submitEnquiry(values)
-    setPending(false)
     if (!result.ok) {
+      setPending(false)
       setErrors(result.errors)
       const first = Object.keys(result.errors)[0]
       if (first) document.getElementById(`${formId}-${first}`)?.focus()
       return
     }
+    if (result.channel === 'api') {
+      window.alert(
+        result.mailed === false
+          ? `Your enquiry was saved, but the email could not be sent. ${result.mailError || 'Allow the script to send email, then deploy it again.'}`
+          : 'Thank you. Your enquiry has been sent to J Homes.',
+      )
+    }
+    setPending(false)
     setErrors({})
     setDone(result.channel)
     track('enquiry_submit', { channel: result.channel })
@@ -175,9 +183,16 @@ export function ContactForm() {
       </div>
 
       <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-        <Button type="submit" disabled={pending}>
-          {pending ? 'Sending' : 'Start my project'}
-        </Button>
+        {pending ? (
+          <p className="flex items-center gap-2 text-sm text-ink-soft" role="status" aria-label="Sending">
+            <span className="chat-dot" />
+            <span className="chat-dot chat-dot-2" />
+            <span className="chat-dot chat-dot-3" />
+            Sending your enquiry
+          </p>
+        ) : (
+          <Button type="submit">Start my project</Button>
+        )}
         {wa && (
           <a href={wa} target="_blank" rel="noopener noreferrer" className="label text-crimson" data-cursor="explore" onClick={() => track('whatsapp_click')}>
             WhatsApp J Homes

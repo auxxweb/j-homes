@@ -47,7 +47,7 @@ export default function Home() {
       <ProcessTimeline />
       <section id="contact" className="border-t border-line bg-paper-deep">
         <Container className="py-20 md:py-28">
-          <p className="label">14 / Contact</p>
+          <p className="label">Contact</p>
           <h2 className="display-2 mt-5 max-w-4xl">Let’s build your home.</h2>
           <p className="mt-5 max-w-xl text-lg text-ink-soft">
             Tell us where you are in your journey. We’ll help you understand the next step.

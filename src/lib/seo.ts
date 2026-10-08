@@ -40,8 +40,17 @@ export function organizationLd() {
     ],
   }
   if (url.startsWith('http')) data.url = url
-  if (company.contact.phone) data.telephone = company.contact.phone
+  if (company.contact.phone) data.telephone = `+${company.contact.phone}`
   if (company.contact.email) data.email = company.contact.email
+  if (company.contact.instagram) data.sameAs = [company.contact.instagram]
+  data.address = {
+    '@type': 'PostalAddress',
+    streetAddress: 'Door No 1/493/K, Ezhumanthuruthil Building, Chottanikkara Road, Pallithazham',
+    addressLocality: 'Mulanthuruthy',
+    addressRegion: 'Kerala',
+    postalCode: '682314',
+    addressCountry: 'IN',
+  }
   return data
 }
 

@@ -14,6 +14,7 @@ const BeforeAfterPage = lazy(() => import('./pages/BeforeAfter'))
 const Contact = lazy(() => import('./pages/Contact'))
 const Blog = lazy(() => import('./pages/Blog'))
 const BlogPost = lazy(() => import('./pages/BlogPost'))
+const GalleryPage = lazy(() => import('./pages/Gallery'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 export default function App() {
@@ -33,6 +34,7 @@ export default function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="blog" element={<Blog />} />
             <Route path="blog/:slug" element={<BlogPost />} />
+            <Route path="gallery" element={<GalleryPage />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

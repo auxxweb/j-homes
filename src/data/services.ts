@@ -70,7 +70,7 @@ export const services: Service[] = [
   },
   {
     slug: 'interior-design',
-    title: 'Interior design',
+    title: 'Interior',
     headline: 'Rooms, finished properly.',
     lede: 'Interior design and execution for kitchens, wardrobes, ceilings, lighting, flooring and the rooms of the house.',
     paragraphs: [
@@ -180,7 +180,86 @@ export const services: Service[] = [
     seoDescription:
       'J Homes coordinates structural, electrical and plumbing design and authority approvals, including K-SMART, for homes in Kerala.',
   },
+  {
+    slug: 'budget-management',
+    title: 'Budget management',
+    headline: 'A budget you can follow.',
+    lede: 'The cost of the house is set with the design and watched as each stage is built, so the project stays readable.',
+    paragraphs: [
+      'Budget management at J Homes sits inside the same sequence as the drawings and the site. The scope is priced against the design, then followed as foundation, structure, finishing and interiors move forward.',
+      'Changes are easier to judge when they are visible. If a material, a room or a stage shifts, the effect on the budget is part of that conversation, not a surprise at the end.',
+      'This is planning and tracking for a residence in Kochi, Ernakulam and Kerala. It is not a promise of a fixed figure before the land, the design and the brief are known.',
+    ],
+    points: [
+      { title: 'Scope and estimate', text: 'The budget starts from what the house is actually going to include.' },
+      { title: 'Stage by stage', text: 'Cost is followed as the build advances, not only at handover.' },
+      { title: 'Changes made visible', text: 'A revision to the design or the specification is read against the budget.' },
+      { title: 'One picture of the project', text: 'Design, construction and finishing are costed as parts of the same home.' },
+    ],
+    includes: ['Project budget', 'Stage-wise tracking', 'Material allowances', 'Variation review'],
+    seoTitle: 'Home Construction Budget Management | J Homes',
+    seoDescription:
+      'J Homes plans and tracks the budget of a residence in Kochi and Kerala, from design through construction, interiors and handover.',
+  },
+  {
+    slug: 'landscaping',
+    title: 'Landscaping',
+    headline: 'The ground around the house.',
+    lede: 'Landscape, levels and the setting of the home, planned with the building rather than added after the walls are done.',
+    paragraphs: [
+      'Landscaping gives the house a ground to sit in. Levels, edges, planting and the approach are considered with the site, so the plot and the building belong to each other.',
+      'A compact plot and a larger ground do not want the same treatment. The work starts from the land you have, and from how you arrive at the house and use the space around it.',
+      'J Homes carries landscaping as part of the residential journey in Kochi, Ernakulam and Kerala, with the same team that designs and builds the home.',
+    ],
+    points: [
+      { title: 'Levels and edges', text: 'The ground is shaped so the house meets the plot cleanly.' },
+      { title: 'Approach', text: 'The way you arrive, including the threshold between the street and the home.' },
+      { title: 'Planting', text: 'The landscape is chosen for the site and the way the ground will be used.' },
+      { title: 'With the building', text: 'Drainage, levels and the plan are resolved together.' },
+    ],
+    includes: ['Site levels', 'Landscape', 'Approach', 'Planting', 'External ground'],
+    seoTitle: 'Residential Landscaping in Kochi | J Homes',
+    seoDescription:
+      'J Homes shapes the ground around a home in Kochi and Kerala: levels, approach, planting and landscape planned with the house.',
+  },
+  {
+    slug: 'loose-furniture',
+    title: 'Loose furniture',
+    headline: 'The pieces you live with.',
+    lede: 'Movable furniture for the rooms — seating, dining, beds and the pieces that are not built in.',
+    paragraphs: [
+      'Loose furniture is the part of the home you can place, move and live with: sofas, dining tables, beds, chairs and the smaller pieces that complete a room. It is distinct from the built interior — kitchens, wardrobes and fitted storage.',
+      'The pieces are chosen for the rooms that already exist in the plan, so scale, use and the way you sit or gather are decided with the house, not after it is empty.',
+      'J Homes includes loose furniture in the residential sequence for homes in Kochi, Ernakulam and Kerala, carried through to the finished rooms.',
+    ],
+    points: [
+      { title: 'Living and dining', text: 'Seating and tables sized to the rooms they occupy.' },
+      { title: 'Bedrooms', text: 'Beds and the pieces around them, chosen for how the room is used.' },
+      { title: 'Not built in', text: 'Movable furniture, separate from kitchens, wardrobes and fitted work.' },
+      { title: 'With the handover', text: 'The rooms are furnished as part of finishing the home.' },
+    ],
+    includes: ['Seating', 'Dining furniture', 'Beds', 'Tables', 'Bedroom furniture'],
+    seoTitle: 'Loose Furniture for Homes in Kochi | J Homes',
+    seoDescription:
+      'J Homes selects loose furniture for residences in Kochi and Kerala: seating, dining, beds and other movable pieces for the finished rooms.',
+  },
 ]
+
+const serviceStepSlugs = [
+  'land-selection',
+  'architectural-design',
+  'budget-management',
+  'house-construction',
+  'interior-design',
+  'landscaping',
+  'loose-furniture',
+] as const
+
+export const serviceSteps = serviceStepSlugs.map((slug) => {
+  const service = services.find((item) => item.slug === slug)
+  if (!service) throw new Error(`Missing service: ${slug}`)
+  return service
+})
 
 export function getService(slug: string) {
   return services.find((service) => service.slug === slug)

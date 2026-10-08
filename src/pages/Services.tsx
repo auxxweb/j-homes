@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { ClosingCta, PageHero } from '../components/layout/PageHero'
 import { Seo } from '../components/layout/Seo'
 import { Container } from '../components/ui/SectionLabel'
-import { services } from '../data/services'
+import { serviceSteps } from '../data/services'
 import { breadcrumbLd, graphLd, organizationLd } from '../lib/seo'
 
 export default function Services() {
@@ -14,15 +14,14 @@ export default function Services() {
     <>
       <Seo
         title="Residential Construction Services in Kochi | J Homes"
-        description="House construction, architectural design, interiors, engineering, land selection and turnkey homes by J Homes in Kochi, Ernakulam and Kerala."
+        description="Land selection, architectural design, budget management, house construction, interiors, landscaping and loose furniture by J Homes in Kochi, Ernakulam and Kerala."
         path="/services"
         jsonLd={graphLd([organizationLd(), breadcrumbLd(crumbs)])}
       />
       <PageHero
-        index="01"
         kicker="Services"
         title="Design. Build. Finish."
-        lede="Six parts of one residential practice. Take the stage you need, or the full turnkey path."
+        lede="Seven steps of one residential practice, from the land to the last piece of furniture."
         crumbs={[
           { label: 'Home', to: '/' },
           { label: 'Services' },
@@ -31,7 +30,7 @@ export default function Services() {
       <section>
         <Container className="py-8 md:py-12">
           <ol>
-            {services.map((service, index) => (
+            {serviceSteps.map((service, index) => (
               <li key={service.slug} className="border-t border-line">
                 <Link to={`/services/${service.slug}`} className="grid gap-4 py-8 md:grid-cols-[5rem_1fr_1.2fr] md:items-baseline" data-cursor="explore">
                   <span className="label">{String(index + 1).padStart(2, '0')}</span>

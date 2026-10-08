@@ -27,10 +27,10 @@ export function Approvals() {
   return (
     <section id="approvals" className="border-t border-line bg-paper">
       <Container className="py-20 md:py-28">
-        <SectionLabel index="06" label="Approvals & engineering" />
-        <h2 className="display-2 mt-5 max-w-4xl">Plan. Engineer. Approve. Build.</h2>
+        <SectionLabel label="Approvals & engineering" />
+        <h2 className="display-2 mt-5 max-w-4xl">Discuss. Upload. Approve. Build.</h2>
         <p className="mt-6 max-w-xl text-lg text-ink-soft">
-          Drawings, structure and services are coordinated, then taken through the authority path — including K-SMART where that is the local process — before execution.
+          A plan is made with the client, uploaded on the K-SMART portal, taken through approval, and only then carried into execution.
         </p>
         <div ref={ref} className="mt-14">
           <svg viewBox="0 0 960 80" className="w-full" aria-hidden="true">

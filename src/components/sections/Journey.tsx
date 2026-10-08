@@ -22,7 +22,7 @@ export function Journey() {
     <section id="journey" className="border-t border-line bg-paper-deep [--rail-fade:var(--color-paper-deep)]">
       <div ref={pinRef} className={pinned ? 'rail-pin relative flex flex-col overflow-hidden pt-[4.75rem]' : 'relative'}>
         <div className="mx-auto w-full max-w-[1440px] shrink-0 px-5 pt-8 pb-5 md:px-10 lg:px-16">
-          <SectionLabel index="03" label="The journey" />
+          <SectionLabel label="The journey" />
           <h2 className="display-2 mt-4 max-w-4xl">
             One team.
             <span className="block">Every stage.</span>
@@ -47,8 +47,18 @@ export function Journey() {
                       <span className="text-muted"> {String(index + 1).padStart(2, '0')} / {String(journey.length).padStart(2, '0')}</span>
                     </p>
                   </div>
-                  <div className="px-3">
+                  <div className="relative px-3">
                     <Photo frame={media.photo} className="h-48 w-full object-cover sm:h-52" />
+                    {'credit' in media && media.credit && (
+                      <a
+                        href={media.credit.href}
+                        className="absolute right-5 bottom-2 text-[0.62rem] text-white/80"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {media.credit.name}, CC BY 4.0
+                      </a>
+                    )}
                   </div>
                   <div className="flex flex-1 flex-col px-5 pt-5 pb-6">
                     <h3 className="font-serif text-[2.15rem] leading-none tracking-tight">{stage.title}</h3>

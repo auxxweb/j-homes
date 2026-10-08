@@ -6,7 +6,7 @@ import { Container } from '../components/ui/SectionLabel'
 import { breadcrumbLd, graphLd, organizationLd } from '../lib/seo'
 
 export default function BeforeAfterPage() {
-  const rest = comparisons.slice(1)
+  const rest = comparisons
   const crumbs = [
     { name: 'Home', path: '/' },
     { name: 'Before and after', path: '/before-after' },
@@ -21,7 +21,6 @@ export default function BeforeAfterPage() {
         jsonLd={graphLd([organizationLd(), breadcrumbLd(crumbs)])}
       />
       <PageHero
-        index="01"
         kicker="Before and after"
         title="More of the same elevation, later in the day."
         lede="Each study has a bar. Move it left for the first view and right for the later one."

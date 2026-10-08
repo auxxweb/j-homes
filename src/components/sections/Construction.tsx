@@ -9,7 +9,7 @@ export function Construction() {
       <Container className="py-20 md:py-28">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:sticky lg:top-28 lg:col-span-5 lg:self-start">
-            <SectionLabel index="07" label="Construction" className="!text-paper/60" />
+            <SectionLabel label="Construction" className="!text-paper/60" />
             <h2 className="display-2 mt-5">Built to last.</h2>
             <p className="mt-6 max-w-md text-paper/70">
               The house is made in stages. Each one is supervised before the next trade covers it — from the ground to the finished surface.

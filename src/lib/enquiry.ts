@@ -1,4 +1,5 @@
 import { company } from '../data/company'
+import { postGoogle, type GooglePostResult } from './googlePost'
 import { budgetLabel, budgetOptions, stageLabel, stages, type BudgetId, type StageId } from '../data/enquiry'
 
 export interface EnquiryInput {
@@ -79,6 +80,19 @@ export function validateEnquiry(input: EnquiryInput): { errors: FieldErrors; val
   }
 }
 
+export function enquiryRow(data: Enquiry, submittedAt = new Date()) {
+  return {
+    Submitted: submittedAt.toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }),
+    Name: data.name,
+    Phone: data.phone,
+    Email: data.email,
+    Location: data.location,
+    'Approximate budget': data.budget ? budgetLabel(data.budget) : 'Prefer not to say yet',
+    'Current stage': stageLabel(data.stage),
+    Message: data.message,
+  }
+}
+
 export function enquiryText(data: Enquiry) {
   return [
     company.whatsappMessage,
@@ -114,7 +128,7 @@ export type SubmitChannel = 'api' | 'whatsapp' | 'email' | 'recorded'
 
 export async function submitEnquiry(
   input: EnquiryInput,
-): Promise<{ ok: true; channel: SubmitChannel; value: Enquiry } | { ok: false; errors: FieldErrors }> {
+): Promise<{ ok: true; channel: SubmitChannel; value: Enquiry; mailed?: boolean; mailError?: string } | { ok: false; errors: FieldErrors }> {
   if (input.website.trim()) {
     const phone = normalizePhone(input.phone) ?? '0000000000'
     return {
@@ -138,15 +152,12 @@ export async function submitEnquiry(
   const endpoint = (import.meta.env.VITE_ENQUIRY_ENDPOINT ?? '').trim()
   if (endpoint && isSafeEndpoint(endpoint)) {
     try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(value),
+      const posted = await postEnquiry(endpoint, {
+        ...enquiryRow(value),
+        submissionId: crypto.randomUUID(),
       })
-      if (!response.ok) {
-        return { ok: false, errors: { form: 'The enquiry could not be sent. Please try again.' } }
-      }
-      return { ok: true, channel: 'api', value }
+      if (!posted.ok) return { ok: false, errors: { form: 'The enquiry could not be sent. Please try again.' } }
+      return { ok: true, channel: 'api', value, mailed: posted.mailed, mailError: posted.mailError }
     } catch {
       return { ok: false, errors: { form: 'The enquiry could not be sent. Please check your connection and try again.' } }
     }
@@ -165,4 +176,16 @@ export async function submitEnquiry(
   }
 
   return { ok: true, channel: 'recorded', value }
+}
+
+let enquiryInFlight: Promise<GooglePostResult> | null = null
+
+function postEnquiry(endpoint: string, payload: Record<string, string>) {
+  if (enquiryInFlight) return enquiryInFlight
+  const request = postGoogle(endpoint, payload)
+  enquiryInFlight = request
+  void request.finally(() => {
+    if (enquiryInFlight === request) enquiryInFlight = null
+  })
+  return request
 }

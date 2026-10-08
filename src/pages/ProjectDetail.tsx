@@ -1,7 +1,9 @@
+import { useCallback, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ClosingCta, PageHero } from '../components/layout/PageHero'
 import { Seo } from '../components/layout/Seo'
 import { ProjectPlate } from '../components/projects/ProjectPlate'
+import { ImageViewer } from '../components/ui/ImageViewer'
 import { Container } from '../components/ui/SectionLabel'
 import { adjacentProjects, formatCent, formatSqFt, getProject } from '../data/projects'
 import { absoluteUrl, breadcrumbLd, graphLd } from '../lib/seo'
@@ -10,6 +12,8 @@ import NotFound from './NotFound'
 export default function ProjectDetail() {
   const { slug = '' } = useParams()
   const project = getProject(slug)
+  const [open, setOpen] = useState<number | null>(null)
+  const close = useCallback(() => setOpen(null), [])
   if (!project) return <NotFound />
   const { previous, next } = adjacentProjects(project.slug)
   const path = `/projects/${project.slug}`
@@ -52,7 +56,6 @@ export default function ProjectDetail() {
         ])}
       />
       <PageHero
-        index="02"
         kicker="Project"
         title={`${project.location}`}
         lede={project.summary}
@@ -64,8 +67,24 @@ export default function ProjectDetail() {
       />
       <div className="border-b border-line bg-paper-deep">
         <Container className="py-8">
-          <ProjectPlate project={project} />
-          <p className="label mt-3">Diagram from the recorded area and floors. Not a construction drawing.</p>
+          {project.images[0] && (
+            <button
+              type="button"
+              className="block w-full overflow-hidden border border-line"
+              data-cursor="view"
+              aria-label={`Expand the ${project.location} image`}
+              onClick={() => setOpen(0)}
+            >
+              <img
+                src={project.images[0].src}
+                alt={project.images[0].alt}
+                width={project.images[0].width}
+                height={project.images[0].height}
+                className="aspect-[16/10] w-full object-cover"
+              />
+            </button>
+          )}
+          <p className="label mt-3">Open the image to see it full size.</p>
         </Container>
       </div>
       <section>
@@ -94,30 +113,39 @@ export default function ProjectDetail() {
       <section className="border-t border-line">
         <Container className="py-14 md:py-20">
           <h2 className="display-3">Gallery</h2>
-          <p className="mt-3 max-w-xl text-sm text-muted">
-            Studies below are generated from the project record. Photographs are shown here when they are added to the project.
-          </p>
+          <p className="mt-3 max-w-xl text-sm text-muted">Open an image to see it full size.</p>
           {project.images.length > 0 && (
             <ul className="mt-8 grid gap-4 md:grid-cols-2">
-              {project.images.map((image) => (
+              {project.images.map((image, index) => (
                 <li key={image.src}>
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    width={image.width}
-                    height={image.height}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full border border-line"
-                  />
+                  <button
+                    type="button"
+                    className="block w-full overflow-hidden border border-line"
+                    data-cursor="view"
+                    aria-label={`Expand image ${index + 1} of the ${project.location} residence`}
+                    onClick={() => setOpen(index)}
+                  >
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      width={image.width}
+                      height={image.height}
+                      loading="lazy"
+                      decoding="async"
+                      className="aspect-[4/3] w-full object-cover"
+                    />
+                  </button>
                 </li>
               ))}
             </ul>
           )}
           <ul className="mt-8 grid gap-4 lg:grid-cols-3">
             {(['elevation', 'plan', 'section'] as const).map((view) => (
-              <li key={view} className="border border-line bg-paper-deep">
-                <ProjectPlate project={project} view={view} />
+              <li key={view}>
+                <p className="label mb-3">{view}</p>
+                <div className="border border-line bg-paper-deep">
+                  <ProjectPlate project={project} view={view} />
+                </div>
               </li>
             ))}
           </ul>
@@ -138,6 +166,7 @@ export default function ProjectDetail() {
         </nav>
       )}
       <ClosingCta>Talk to J Homes about a home of your own.</ClosingCta>
+      {open !== null && <ImageViewer images={project.images} index={open} onChange={setOpen} onClose={close} />}
     </>
   )
 }

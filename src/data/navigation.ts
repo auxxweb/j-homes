@@ -18,4 +18,5 @@ export const mobileNav = [
 export const footerNav = [
   ...mainNav,
   { label: 'Journal', to: '/blog' },
+  { label: 'Gallery', to: '/gallery' },
 ] as const

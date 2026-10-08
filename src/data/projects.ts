@@ -1,8 +1,14 @@
+import { asset } from '../lib/assets'
+
 export interface ProjectImage {
   src: string
   alt: string
   width?: number
   height?: number
+}
+
+function projectImage(file: string, alt: string, width: number, height: number): ProjectImage {
+  return { src: asset(`/images/projects/${file}`), alt, width, height }
 }
 
 export interface Project {
@@ -44,8 +50,15 @@ export const projects: Project[] = [
     interior:
       'Interiors cover the rooms the area allows: kitchen, storage, living, dining and bedrooms, with ceilings, lighting, flooring and wall finishes carried as part of the same project.',
     result:
-      'The completed record is a three-storey residence of 2,100 sq.ft in Mulanthuruthy. Photography of the finished house can be added to this page when it is available.',
-    images: [],
+      'The completed record is a three-storey residence of 2,100 sq.ft in Mulanthuruthy.',
+    images: [
+      projectImage(
+        '06.jpg',
+        'Modern residence with stone cladding, a glazed bay and a front court in Mulanthuruthy',
+        1906,
+        2000,
+      ),
+    ],
   },
   {
     slug: 'mulanthuruthy-g1-residence',
@@ -66,8 +79,15 @@ export const projects: Project[] = [
     interior:
       'Interior work follows the two floors — kitchen, wardrobes, living and dining, bedrooms, lighting and finishes — coordinated with the furniture layout.',
     result:
-      'A completed G+1 residence of 2,200 sq.ft on 10 cents in Mulanthuruthy. Project photography can be added to the gallery without changing this record.',
-    images: [],
+      'A completed G+1 residence of 2,200 sq.ft on 10 cents in Mulanthuruthy.',
+    images: [
+      projectImage(
+        '01.jpg',
+        'Grey residence with stone piers, a car porch and a ground-floor sit-out in Mulanthuruthy',
+        2000,
+        1658,
+      ),
+    ],
   },
   {
     slug: 'eruveli-residence',
@@ -88,8 +108,15 @@ export const projects: Project[] = [
     interior:
       'Interiors are planned tightly: kitchen, storage, living and bedrooms finished within the area that was built.',
     result:
-      'A G+1 home of 1,200 sq.ft in Eruveli. The page is ready for photographs when they are added to the project record.',
-    images: [],
+      'A G+1 home of 1,200 sq.ft in Eruveli.',
+    images: [
+      projectImage(
+        '03.jpg',
+        'White two-storey residence with a dark tiled roof, balconies and a front court in Eruveli',
+        2000,
+        1863,
+      ),
+    ],
   },
   {
     slug: 'thiruvaniyoor-residence',
@@ -110,8 +137,15 @@ export const projects: Project[] = [
     interior:
       'Living, dining, bedrooms, kitchen and storage are arranged on one level, with finishes and furniture planned for rooms that open toward the site.',
     result:
-      'A ground-floor residence of 2,200 sq.ft on 50 cents in Thiruvaniyoor. Images of the house and its grounds can be added to this record later.',
-    images: [],
+      'A ground-floor residence of 2,200 sq.ft on 50 cents in Thiruvaniyoor.',
+    images: [
+      projectImage(
+        '05.jpg',
+        'Single-storey residence with a terracotta roof, white columns and a timber veranda in Thiruvaniyoor',
+        1941,
+        2000,
+      ),
+    ],
   },
   {
     slug: 'changanassery-residence',
@@ -132,8 +166,15 @@ export const projects: Project[] = [
     interior:
       'Interiors extend across both floors: kitchens, wardrobes, living and dining, bedrooms, ceilings, lighting, flooring and custom furniture where the rooms require it.',
     result:
-      'A G+1 residence of 3,500 sq.ft in Changanassery. The gallery is structured so finished photography can be published with the same project facts.',
-    images: [],
+      'A G+1 residence of 3,500 sq.ft in Changanassery.',
+    images: [
+      projectImage(
+        '02.jpg',
+        'Brick and white residence with a black tiled roof and a covered porch in Changanassery',
+        2000,
+        1386,
+      ),
+    ],
   },
   {
     slug: 'chottanikkara-residence',
@@ -154,8 +195,15 @@ export const projects: Project[] = [
     interior:
       'Kitchen, wardrobes, living and bedrooms are finished within a modest area, with storage doing as much work as the open rooms.',
     result:
-      'A G+1 residence of 1,300 sq.ft in Chottanikkara. Photographs can be added to the project when they are ready.',
-    images: [],
+      'A G+1 residence of 1,300 sq.ft in Chottanikkara.',
+    images: [
+      projectImage(
+        '04.jpg',
+        'Grey residence with a corner balcony, timber screens and evening light in Chottanikkara',
+        2000,
+        1754,
+      ),
+    ],
   },
 ]
 

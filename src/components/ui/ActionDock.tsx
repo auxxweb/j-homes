@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
+import { RequirementChat } from '../checklist/RequirementChat'
 import { company } from '../../data/company'
 import { track } from '../../lib/analytics'
 import { asset } from '../../lib/assets'
@@ -141,7 +142,7 @@ export function ActionDock() {
       )}
       <a
         href={asset('/brochure/j-homes-brochure.pdf')}
-        download="J-Homes-Brochure.pdf"
+        download="J-Homes-Specification.pdf"
         className="dock-btn"
         data-cursor="explore"
         aria-label="Download the J Homes brochure"
@@ -220,6 +221,7 @@ export function ActionDock() {
             document.body,
           )}
       </div>
+      <RequirementChat />
     </div>
   )
 }

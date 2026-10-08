@@ -11,19 +11,11 @@ export function Container({
 }
 
 export function SectionLabel({
-  index,
   label,
   className = '',
 }: {
-  index: string
   label: string
   className?: string
 }) {
-  return (
-    <p className={`label ${className}`}>
-      {index}
-      <span aria-hidden="true"> / </span>
-      {label}
-    </p>
-  )
+  return <p className={`label ${className}`}>{label}</p>
 }

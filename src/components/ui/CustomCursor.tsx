@@ -75,7 +75,7 @@ export function CustomCursor() {
   if (!active) return null
 
   return (
-    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[80]">
+    <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-[100]">
       <div ref={dotRef} className="fixed left-0 top-0 h-1.5 w-1.5 rounded-full bg-crimson opacity-0" />
       <div
         ref={ringRef}

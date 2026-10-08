@@ -8,7 +8,7 @@ export function Design() {
   return (
     <section id="design" className="sheet-grid border-t border-line">
       <Container className="py-20 md:py-28">
-        <SectionLabel index="05" label="Design" />
+        <SectionLabel label="Design" />
         <div className="mt-5 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
           <h2 className="display-2 max-w-3xl">Turn your idea into a design.</h2>
           <Link to="/services/architectural-design" className="label text-crimson" data-cursor="explore">

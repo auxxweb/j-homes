@@ -8,13 +8,14 @@ export type Comparison = (typeof comparisons)[number]
 
 export function CompareSlider({ pair }: { pair: Comparison }) {
   const [position, setPosition] = useState(50)
+  const ratio = Math.max(pair.before.width / pair.before.height, pair.after.width / pair.after.height)
 
   return (
     <figure>
-      <div className="compare-frame relative aspect-[16/10] overflow-hidden bg-night select-none">
-        <Photo frame={pair.before} className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}>
-          <Photo frame={pair.after} className="h-full w-full object-cover" />
+      <div className="compare-frame relative overflow-hidden bg-night select-none" style={{ aspectRatio: ratio }}>
+        <Photo frame={pair.before} className="absolute inset-0 h-full w-full object-contain" />
+        <div className="absolute inset-0" style={{ clipPath: `inset(0 0 0 ${100 - position}%)` }}>
+          <Photo frame={pair.after} className="h-full w-full object-contain" />
         </div>
         <div
           aria-hidden="true"
@@ -53,15 +54,15 @@ export function BeforeAfter() {
   return (
     <section id="before-after" className="border-t border-line bg-night text-paper">
       <Container className="py-20 md:py-28">
-        <SectionLabel index="09" label="Before and after" className="!text-paper/60" />
+        <SectionLabel label="Before and after" className="!text-paper/60" />
         <h2 className="display-2 mt-5 max-w-4xl">
-          From daylight
-          <span className="block">to evening.</span>
+          From structure
+          <span className="block">to finish.</span>
         </h2>
         <p className="mt-6 max-w-xl text-lg text-paper/70">
-          Move the bar across the elevation. Left is the first view. Right is the later one.
+          Move the bar across the house. Left is the building under construction. Right is the finished home.
         </p>
-        <div className="mt-12">
+        <div className="mx-auto mt-12 max-w-3xl">
           <CompareSlider pair={featured} />
         </div>
         {hasMore && (

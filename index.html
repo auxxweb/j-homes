@@ -16,6 +16,11 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+    <script>
+      try {
+        if (localStorage.getItem('jhomes-theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark')
+      } catch (e) {}
+    </script>
     <title>J Homes | House Construction &amp; Turnkey Solutions in Kochi, Kerala</title>
     <style>
       #preloader {
@@ -47,6 +52,13 @@
         letter-spacing: 0.18em;
         text-transform: uppercase;
         color: #5e5852;
+      }
+      html[data-theme='dark'] #preloader {
+        background: #141211;
+        color: #f3f0ea;
+      }
+      html[data-theme='dark'] #preloader p:last-child {
+        color: #b1a79c;
       }
     </style>
     <meta property="og:title" content="J Homes | House Construction &amp; Turnkey Solutions in Kochi, Kerala" />

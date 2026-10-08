@@ -2,8 +2,8 @@ function clean(value: string | undefined) {
   return (value ?? '').trim()
 }
 
-const phone = clean(import.meta.env.VITE_PHONE)
-const phoneDisplay = clean(import.meta.env.VITE_PHONE_DISPLAY) || phone
+const phone = clean(import.meta.env.VITE_PHONE) || '917907938664'
+const phoneDisplay = clean(import.meta.env.VITE_PHONE_DISPLAY) || '+91 7907938664'
 
 export const company = {
   name: 'J Homes',
@@ -17,7 +17,7 @@ export const company = {
     'Building with quality, driven by trust.',
   ],
   experienceYears: 10,
-  completedProjects: 50,
+  completedProjects: 100,
   area: {
     city: 'Kochi',
     district: 'Ernakulam',
@@ -27,10 +27,21 @@ export const company = {
   contact: {
     phone,
     phoneDisplay,
-    email: clean(import.meta.env.VITE_EMAIL),
-    whatsapp: clean(import.meta.env.VITE_WHATSAPP).replace(/[^\d]/g, ''),
-    instagram: clean(import.meta.env.VITE_INSTAGRAM),
+    email: clean(import.meta.env.VITE_EMAIL) || 'jhomesprojects@gmail.com',
+    whatsapp: clean(import.meta.env.VITE_WHATSAPP).replace(/[^\d]/g, '') || '917907938664',
+    instagram: clean(import.meta.env.VITE_INSTAGRAM) || 'https://www.instagram.com/jhomesconstructions/',
+    instagramName: 'J HOMES CONSTRUCTIONS',
     facebook: clean(import.meta.env.VITE_FACEBOOK),
+    facebookName: 'J HOMES CONSTRUCTIONS',
+    address: [
+      'J Homes, Door No 1/493/K, Ezhumanthuruthil Building,',
+      'Chottanikkara Road, above Babyhug Store,',
+      'Pallithazham, Mulanthuruthy, Kerala,',
+      'Pin – 682314',
+    ],
+    mapUrl: 'https://share.google/y52wnJqt6Sz1TQLOT',
+    mapEmbed:
+      'https://maps.google.com/maps?q=J+HOMES+Constructions,+Mulanthuruthy&z=16&output=embed',
   },
   logo: {
     webp: '/brand/j-homes-logo.webp',
