@@ -15,7 +15,7 @@ export interface Service {
   seoDescription: string
 }
 
-export const services: Service[] = [
+export let services: Service[] = [
   {
     slug: 'house-construction',
     title: 'House construction',
@@ -255,11 +255,20 @@ const serviceStepSlugs = [
   'loose-furniture',
 ] as const
 
-export const serviceSteps = serviceStepSlugs.map((slug) => {
+export let serviceSteps = serviceStepSlugs.flatMap((slug) => {
   const service = services.find((item) => item.slug === slug)
-  if (!service) throw new Error(`Missing service: ${slug}`)
-  return service
+  return service ? [service] : []
 })
+
+export function applyServices(next: Service[]) {
+  if (!next.length) return
+  services = next
+  serviceSteps = serviceStepSlugs.flatMap((slug) => {
+    const service = services.find((item) => item.slug === slug)
+    return service ? [service] : []
+  })
+  if (!serviceSteps.length) serviceSteps = services.slice(0, 7)
+}
 
 export function getService(slug: string) {
   return services.find((service) => service.slug === slug)

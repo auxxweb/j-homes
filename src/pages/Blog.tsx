@@ -3,9 +3,11 @@ import { ClosingCta, PageHero } from '../components/layout/PageHero'
 import { Seo } from '../components/layout/Seo'
 import { Container } from '../components/ui/SectionLabel'
 import { useJournal } from '../lib/useJournal'
+import { readPage } from '../data/pageCopy'
 import { breadcrumbLd, graphLd, organizationLd } from '../lib/seo'
 
 export default function Blog() {
+  const page = readPage('journal')
   const { articles } = useJournal()
   const crumbs = [
     { name: 'Home', path: '/' },
@@ -14,15 +16,15 @@ export default function Blog() {
   return (
     <>
       <Seo
-        title="Journal | Building a Home with J Homes"
-        description="Guides from J Homes on planning a house in Kochi, what turnkey construction includes, and the drawings behind a build."
+        title={page.seoTitle}
+        description={page.seoDescription}
         path="/blog"
         jsonLd={graphLd([organizationLd(), breadcrumbLd(crumbs)])}
       />
       <PageHero
-        kicker="Journal"
-        title="Notes on building a home."
-        lede="Practical writing about the J Homes process. No invented news, no awards, no borrowed projects."
+        kicker={page.kicker}
+        title={page.title}
+        lede={page.lede}
         crumbs={[
           { label: 'Home', to: '/' },
           { label: 'Journal' },

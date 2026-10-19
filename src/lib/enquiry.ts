@@ -1,4 +1,5 @@
 import { company } from '../data/company'
+import { cmsApi, cmsSite } from '../cms/CmsProvider'
 import { postGoogle, type GooglePostResult } from './googlePost'
 import { budgetLabel, budgetOptions, stageLabel, stages, type BudgetId, type StageId } from '../data/enquiry'
 
@@ -150,6 +151,22 @@ export async function submitEnquiry(
   if (!value || Object.keys(errors).length) return { ok: false, errors }
 
   const endpoint = (import.meta.env.VITE_ENQUIRY_ENDPOINT ?? '').trim()
+  const cms = cmsApi()
+
+  if (cms) {
+    try {
+      const response = await fetch(`${cms}/api/public/${cmsSite()}/enquiries`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...value, source: 'contact' }),
+      })
+      if (!response.ok) return { ok: false, errors: { form: 'The enquiry could not be sent. Please try again.' } }
+      return { ok: true, channel: 'api', value }
+    } catch {
+      return { ok: false, errors: { form: 'The enquiry could not be sent. Please check your connection and try again.' } }
+    }
+  }
+
   if (endpoint && isSafeEndpoint(endpoint)) {
     try {
       const posted = await postEnquiry(endpoint, {

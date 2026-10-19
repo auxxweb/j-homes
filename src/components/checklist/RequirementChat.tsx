@@ -1,9 +1,11 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useLenis } from '../../hooks/useLenis'
 import { checklistQuestions, visibleQuestions, type AnswerValue, type Answers, type Choice } from '../../data/checklist'
 import { checklistPdf } from '../../lib/checklistPdf'
-import { checklistEndpoint, submitChecklist } from '../../lib/checklistSubmit'
+import { submitChecklist } from '../../lib/checklistSubmit'
+import { ChecklistShare } from './ChecklistShare'
 
 interface ChatMessage {
   id: number
@@ -16,8 +18,11 @@ interface StepMark {
   label: string
 }
 
-const greeting =
+const dockGreeting =
   'Hello. I’ll ask about the home you want, one question at a time. You can close this and come back — your answers stay until you leave the page.'
+
+const pageGreeting =
+  'Hello. I’ll ask about the home you want, one question at a time. Your answers stay on this page until you send them or start again.'
 
 function today() {
   return new Date().toISOString().slice(0, 10)
@@ -31,16 +36,18 @@ function nextIndex(answers: Answers, from: number) {
   return -1
 }
 
-export function RequirementChat() {
+export function RequirementChat({ page = false }: { page?: boolean }) {
   const panelId = useId()
   const listRef = useRef<HTMLDivElement>(null)
   const closeRef = useRef<HTMLButtonElement>(null)
   const fieldRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null)
   const lenis = useLenis()
+  const navigate = useNavigate()
   const idRef = useRef(3)
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(page)
+  const [sharing, setSharing] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { id: 1, role: 'bot', text: greeting },
+    { id: 1, role: 'bot', text: page ? pageGreeting : dockGreeting },
     { id: 2, role: 'bot', text: checklistQuestions[0].prompt },
   ])
   const [step, setStep] = useState(0)
@@ -66,7 +73,11 @@ export function RequirementChat() {
     lenis?.stop()
     closeRef.current?.focus()
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setOpen(false)
+      if (event.key === 'Escape') {
+        if (sharing) setSharing(false)
+        else if (page) navigate('/')
+        else setOpen(false)
+      }
     }
     window.addEventListener('keydown', onKey)
     return () => {
@@ -74,7 +85,7 @@ export function RequirementChat() {
       lenis?.start()
       window.removeEventListener('keydown', onKey)
     }
-  }, [open, lenis])
+  }, [open, lenis, navigate, page, sharing])
 
   useEffect(() => {
     if (!open) return
@@ -114,7 +125,7 @@ export function RequirementChat() {
     setDraft('')
     setPicked([])
     if (following === -1) {
-      reply('That’s everything. Send it and we’ll file your checklist in Google Drive and on the sheet.', () => {
+      reply('That’s everything. Send it and J Homes will keep your answers and the PDF.', () => {
         setStep(-1)
         setFinished(false)
       })
@@ -175,7 +186,7 @@ export function RequirementChat() {
     const kept = trail.slice(0, -1)
     const nextAnswers = { ...answers }
     delete nextAnswers[checklistQuestions[previous.step].id]
-    const rebuilt: ChatMessage[] = [{ id: 1, role: 'bot', text: greeting }]
+    const rebuilt: ChatMessage[] = [{ id: 1, role: 'bot', text: page ? pageGreeting : dockGreeting }]
     let id = 2
     for (const mark of kept) {
       rebuilt.push({ id, role: 'bot', text: checklistQuestions[mark.step].prompt })
@@ -200,7 +211,7 @@ export function RequirementChat() {
     idRef.current = 3
     setThinking(false)
     setMessages([
-      { id: 1, role: 'bot', text: greeting },
+      { id: 1, role: 'bot', text: page ? pageGreeting : dockGreeting },
       { id: 2, role: 'bot', text: checklistQuestions[0].prompt },
     ])
     setStep(0)
@@ -224,14 +235,10 @@ export function RequirementChat() {
       const result = await submitChecklist(answers, submittedAt, pdf)
       if (result.ok) {
         setFinished(true)
-        text = result.mailed === false
-          ? `Sent. Your checklist is in Google Drive and on the sheet. The email could not be sent. ${result.mailError || ''}`.trim()
-          : 'Sent. Your checklist is in Google Drive, your answers are on the sheet, and J Homes has been emailed the PDF link.'
+        text = 'Sent. Your answers and PDF are with J Homes.'
       } else {
         sendingRef.current = false
-        text = checklistEndpoint()
-          ? 'Google did not accept the checklist. It was not saved on this device.'
-          : 'Google Drive is not connected yet, so the checklist was not filed.'
+        text = result.error || 'The checklist could not be saved. Please try again.'
       }
     } catch {
       text = 'The connection failed. The checklist was not filed.'
@@ -264,15 +271,17 @@ export function RequirementChat() {
                 <p className="label text-crimson">J Homes</p>
                 <h2 className="mt-1 font-serif text-4xl leading-none md:text-5xl">Requirement checklist</h2>
               </div>
-              <button
-                ref={closeRef}
-                type="button"
-                className="inline-flex shrink-0 items-center gap-2 border border-ink px-3 py-2 text-[0.68rem] font-semibold tracking-[0.16em] text-ink uppercase"
-                onClick={() => setOpen(false)}
-              >
-                <CloseIcon />
-                Close
-              </button>
+              <div className="flex shrink-0 gap-2">
+                <button
+                  ref={closeRef}
+                  type="button"
+                  className="inline-flex items-center gap-2 border border-ink px-3 py-2 text-[0.68rem] font-semibold tracking-[0.16em] text-ink uppercase"
+                  onClick={() => (page ? navigate('/') : setOpen(false))}
+                >
+                  <CloseIcon />
+                  {page ? 'Home' : 'Close'}
+                </button>
+              </div>
             </div>
             <div className="mx-auto mt-4 w-full max-w-3xl">
               <p className="text-[0.68rem] tracking-[0.14em] text-muted uppercase">{question?.section ?? 'Review'}</p>
@@ -303,7 +312,7 @@ export function RequirementChat() {
               </p>
             )}
           </div>
-          <footer className="border-t border-line px-5 py-4 md:px-10">
+          <footer className="border-t border-line px-5 py-4 pb-24 md:px-10 md:pb-4">
             <div className="mx-auto w-full max-w-3xl">
             {waiting && question && (question.kind === 'choice' || question.kind === 'multi') && (
               <div className="flex flex-wrap gap-2" data-lenis-prevent>
@@ -428,14 +437,45 @@ export function RequirementChat() {
         </section>,
           document.body,
         )}
-      <button
-        type="button"
+      {page && (
+        <>
+          <button
+            type="button"
+            className="dock-btn fixed right-4 bottom-5 z-[90] md:right-5"
+            aria-expanded={sharing}
+            aria-controls={`${panelId}-share`}
+            aria-label="Share the requirement checklist"
+            onClick={() => setSharing(true)}
+          >
+            <ShareIcon />
+            <span>Share</span>
+          </button>
+          {sharing && createPortal(
+            <>
+              <button type="button" className="fixed inset-0 z-[100] bg-ink/35" aria-label="Close share" onClick={() => setSharing(false)} />
+              <div
+                id={`${panelId}-share`}
+                role="dialog"
+                aria-modal="true"
+                aria-label="Share the requirement checklist"
+                className="fixed z-[110] overflow-y-auto border border-line bg-paper p-5 text-ink inset-x-4 bottom-20 max-h-[min(40rem,calc(100svh-6.5rem))] sm:inset-x-auto sm:right-5 sm:w-[min(24rem,calc(100vw-2rem))]"
+              >
+                <p className="label">Share</p>
+                <p className="mt-2 text-sm text-ink-soft">Send this checklist chat with a link or QR code.</p>
+                <div className="mt-4">
+                  <ChecklistShare qr />
+                </div>
+              </div>
+            </>,
+            document.body,
+          )}
+        </>
+      )}
+      {!page && <Link
+        to="/checklist"
         className="dock-btn"
         data-cursor="explore"
-        aria-expanded={open}
-        aria-controls={panelId}
         aria-label="Open the requirement checklist"
-        onClick={() => setOpen((value) => !value)}
       >
         <span className="claw-mark">
           {!open && (
@@ -447,8 +487,19 @@ export function RequirementChat() {
           <ClawIcon />
         </span>
         <span>Checklist</span>
-      </button>
+      </Link>}
     </>
+  )
+}
+
+function ShareIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-none stroke-current" strokeWidth="1.6">
+      <circle cx="6" cy="12" r="2.2" />
+      <circle cx="17" cy="6.5" r="2.2" />
+      <circle cx="17" cy="17.5" r="2.2" />
+      <path d="M8 11.1 14.8 7.6M8.1 13.1l6.7 3.4" />
+    </svg>
   )
 }
 

@@ -29,7 +29,7 @@ export interface Project {
   images: ProjectImage[]
 }
 
-export const projects: Project[] = [
+export let projects: Project[] = [
   {
     slug: 'mulanthuruthy-residence',
     location: 'Mulanthuruthy',
@@ -206,6 +206,10 @@ export const projects: Project[] = [
     ],
   },
 ]
+
+export function applyProjects(next: Project[]) {
+  if (next.length) projects = next
+}
 
 export function getProject(slug: string) {
   return projects.find((project) => project.slug === slug)

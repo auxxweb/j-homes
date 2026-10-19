@@ -3,9 +3,11 @@ import { ClosingCta, PageHero } from '../components/layout/PageHero'
 import { Seo } from '../components/layout/Seo'
 import { Container } from '../components/ui/SectionLabel'
 import { serviceSteps } from '../data/services'
+import { readPage } from '../data/pageCopy'
 import { breadcrumbLd, graphLd, organizationLd } from '../lib/seo'
 
 export default function Services() {
+  const page = readPage('services')
   const crumbs = [
     { name: 'Home', path: '/' },
     { name: 'Services', path: '/services' },
@@ -13,15 +15,15 @@ export default function Services() {
   return (
     <>
       <Seo
-        title="Residential Construction Services in Kochi | J Homes"
-        description="Land selection, architectural design, budget management, house construction, interiors, landscaping and loose furniture by J Homes in Kochi, Ernakulam and Kerala."
+        title={page.seoTitle}
+        description={page.seoDescription}
         path="/services"
         jsonLd={graphLd([organizationLd(), breadcrumbLd(crumbs)])}
       />
       <PageHero
-        kicker="Services"
-        title="Design. Build. Finish."
-        lede="Seven steps of one residential practice, from the land to the last piece of furniture."
+        kicker={page.kicker}
+        title={page.title}
+        lede={page.lede}
         crumbs={[
           { label: 'Home', to: '/' },
           { label: 'Services' },

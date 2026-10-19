@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
+import { ChecklistShare } from '../checklist/ChecklistShare'
 import { RequirementChat } from '../checklist/RequirementChat'
 import { company } from '../../data/company'
 import { track } from '../../lib/analytics'
@@ -141,7 +142,7 @@ export function ActionDock() {
         </Link>
       )}
       <a
-        href={asset('/brochure/j-homes-brochure.pdf')}
+        href={asset(company.brochure)}
         download="J-Homes-Specification.pdf"
         className="dock-btn"
         data-cursor="explore"
@@ -216,6 +217,13 @@ export function ActionDock() {
                     )}
                   </div>
                 )}
+                <div className="mt-5 border-t border-line pt-4">
+                  <p className="label">Requirement checklist</p>
+                  <p className="mt-2 text-sm text-ink-soft">Send the checklist chat to a client.</p>
+                  <div className="mt-3">
+                    <ChecklistShare />
+                  </div>
+                </div>
               </div>
             </>,
             document.body,

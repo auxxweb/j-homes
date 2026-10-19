@@ -1,7 +1,9 @@
 import { lazy } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { CmsProvider } from './cms/CmsProvider'
 import { Layout } from './components/layout/Layout'
 import { SmoothScroll } from './hooks/useLenis'
+import ChecklistPage from './pages/Checklist'
 
 const Home = lazy(() => import('./pages/Home'))
 const About = lazy(() => import('./pages/About'))
@@ -20,8 +22,10 @@ const NotFound = lazy(() => import('./pages/NotFound'))
 export default function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+    <CmsProvider>
       <SmoothScroll>
         <Routes>
+          <Route path="checklist" element={<ChecklistPage />} />
           <Route element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
@@ -39,6 +43,7 @@ export default function App() {
           </Route>
         </Routes>
       </SmoothScroll>
+    </CmsProvider>
     </BrowserRouter>
   )
 }

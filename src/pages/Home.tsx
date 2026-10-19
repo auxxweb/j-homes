@@ -18,14 +18,17 @@ import { ContactForm } from '../components/forms/ContactForm'
 import { Seo } from '../components/layout/Seo'
 import { Container } from '../components/ui/SectionLabel'
 import { company } from '../data/company'
+import { readPage } from '../data/pageCopy'
 import { graphLd, organizationLd, websiteLd } from '../lib/seo'
 
 export default function Home() {
+  const page = readPage('home')
+  const contact = page.sections[0]
   return (
     <>
       <Seo
-        title="J Homes | House Construction & Turnkey Solutions in Kochi, Kerala"
-        description="J Homes provides residential construction, architectural design, interiors and complete turnkey home solutions across Kochi, Ernakulam and Kerala."
+        title={page.seoTitle}
+        description={page.seoDescription}
         path="/"
         jsonLd={graphLd([organizationLd(), websiteLd()])}
       />
@@ -48,9 +51,9 @@ export default function Home() {
       <section id="contact" className="border-t border-line bg-paper-deep">
         <Container className="py-20 md:py-28">
           <p className="label">Contact</p>
-          <h2 className="display-2 mt-5 max-w-4xl">Let’s build your home.</h2>
+          <h2 className="display-2 mt-5 max-w-4xl">{contact?.heading || 'Let’s build your home.'}</h2>
           <p className="mt-5 max-w-xl text-lg text-ink-soft">
-            Tell us where you are in your journey. We’ll help you understand the next step.
+            {contact?.text || 'Tell us where you are in your journey. We’ll help you understand the next step.'}
           </p>
           <p className="mt-4 max-w-xl text-sm text-muted">
             {company.promise} Serving {company.area.city}, {company.area.district} and {company.area.region}.

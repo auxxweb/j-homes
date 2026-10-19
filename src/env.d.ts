@@ -12,4 +12,6 @@ interface ImportMetaEnv {
   readonly VITE_JOURNAL_SHEET_ID?: string
   readonly VITE_JOURNAL_ENDPOINT?: string
   readonly VITE_GA_ID?: string
+  readonly VITE_CMS_API?: string
+  readonly VITE_CMS_SITE?: string
 }

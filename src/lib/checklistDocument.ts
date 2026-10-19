@@ -72,6 +72,16 @@ export function checklistDocument(answers: Answers, submittedAt: string) {
   return lines.join('\n')
 }
 
+export function checklistAnswers(answers: Answers) {
+  return visibleQuestions(answers)
+    .filter((question) => question.id in answers)
+    .map((question) => ({
+      section: question.section,
+      label: question.label,
+      value: fieldValue(question.id, formatAnswer(question, answers[question.id])),
+    }))
+}
+
 export function checklistRow(answers: Answers, submittedAt: string) {
   const question = (id: string) => {
     const item = checklistQuestions.find((entry) => entry.id === id)

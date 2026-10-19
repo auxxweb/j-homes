@@ -12,7 +12,7 @@ export interface JournalArticle {
   blocks: JournalBlock[]
 }
 
-export const articles: JournalArticle[] = [
+export let articles: JournalArticle[] = [
   {
     slug: 'planning-a-home-in-kochi',
     title: 'Planning a home in Kochi, from the plot to handover',
@@ -140,6 +140,10 @@ export const articles: JournalArticle[] = [
     ],
   },
 ]
+
+export function applyArticles(next: JournalArticle[]) {
+  if (next.length) articles = next
+}
 
 export function getArticle(slug: string) {
   return articles.find((article) => article.slug === slug)

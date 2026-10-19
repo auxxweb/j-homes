@@ -11,7 +11,7 @@ function frame(src: string, alt: string, width: number, height: number): Frame {
   return { src: asset(src), alt, width, height }
 }
 
-export const journeyMedia = [
+export let journeyMedia = [
   {
     glyph: 'land',
     photo: frame(
@@ -87,7 +87,7 @@ export const journeyMedia = [
   },
 ] as const
 
-export const comparisons = [
+export let comparisons = [
   {
     title: 'The same house',
     beforeLabel: 'Construction',
@@ -158,7 +158,7 @@ export const comparisons = [
   },
 ] as const
 
-export const interiorMedia = [
+export let interiorMedia = [
   frame('/images/interiors/kitchen.webp', 'A modular kitchen with timber cabinets, open shelving and a long worktop', 1200, 1800),
   frame('/images/interiors/wardrobe.webp', 'A fitted wardrobe interior with hanging space and organised shelves', 1200, 1800),
   frame('/images/interiors/living.webp', 'A living room arranged around a low cabinet and a composed seating wall', 1600, 844),
@@ -171,7 +171,7 @@ export const interiorMedia = [
   frame('/images/interiors/furniture.webp', 'A custom sofa and side tables arranged for a living room', 1600, 1067),
 ] as const
 
-export const processMedia = [
+export let processMedia = [
   frame('/images/process/discover.webp', 'A finished residence exterior, the kind of home a first conversation is aiming toward', 1400, 933),
   frame('/images/process/plan.webp', 'Architectural drawings spread on a table, the plan before the build', 1400, 788),
   frame('/images/process/design.webp', 'A composed building elevation, the idea resolved as architecture', 1400, 933),
@@ -181,7 +181,7 @@ export const processMedia = [
   frame('/images/process/handover.webp', 'House keys held at the threshold, the moment a home is handed over', 1400, 1051),
 ] as const
 
-export const furnitureMedia = [
+export let furnitureMedia = [
   frame('/images/interiors/sofa.webp', 'A sofa and chairs arranged as the centre of a living room', 1400, 933),
   frame('/images/interiors/dining.webp', 'A dining table and chairs scaled to a shared room', 1600, 900),
   frame('/images/interiors/bed.webp', 'A bed dressed in linen, the calm centre of a bedroom', 1400, 933),
@@ -191,7 +191,7 @@ export const furnitureMedia = [
   frame('/images/interiors/decor.webp', 'A few objects on a sideboard, the last layer of a room', 1200, 1800),
 ] as const
 
-export const beyondMedia = [
+export let beyondMedia = [
   frame('/images/studies/court-garden.webp', 'A residence set in a planted court, with lawn joints and tropical trees', 1000, 750),
   frame('/images/studies/slat-gate.webp', 'A dark slatted gate between the street and a white residence', 1024, 748),
   frame('/images/interiors/sofa.webp', 'Furniture arranged for a living room that has already been planned', 1400, 933),
@@ -201,14 +201,14 @@ export const beyondMedia = [
   frame('/images/studies/carport-side.webp', 'A completed white residence with its porch, court and landscape in place', 1024, 681),
 ] as const
 
-export const designPhoto = frame(
+export let designPhoto = frame(
   '/images/studies/arch-day.webp',
   'Daylight elevation of a cream residence with a balcony, timber doors and a patterned screen',
   1024,
   576,
 )
 
-export const gallery = [
+export let gallery = [
   frame('/images/studies/carport-front.webp', 'Front elevation of a white residence with a car porch, brick screen and palm trees', 1024, 829),
   frame('/images/studies/carport-side.webp', 'Side view of a white residence with a car porch and a paved court', 1024, 681),
   frame('/images/studies/colonial-court.webp', 'A white residence with a front court, pool edge and planted boundary', 1024, 576),
@@ -231,9 +231,41 @@ export const gallery = [
   frame('/images/studies/clay-roof.webp', 'A residence with a clay-tiled pitch over the upper floor', 1000, 750),
 ]
 
-export const constructionPhoto = frame(
+export let constructionPhoto = frame(
   '/images/process/build.webp',
   'A house during construction, the shell rising before finishes are applied',
   1400,
   933,
 )
+
+export function applyMedia(next: {
+  gallery?: Frame[]
+  comparisons?: typeof comparisons
+  journey?: Frame[]
+  process?: Frame[]
+  interiors?: Frame[]
+  furniture?: Frame[]
+  beyond?: Frame[]
+  design?: Frame
+  construction?: Frame
+}) {
+  if (next.gallery?.length) gallery = next.gallery
+  if (next.comparisons?.length) comparisons = next.comparisons
+  if (next.journey?.length) journeyMedia = next.journey as unknown as typeof journeyMedia
+  if (next.process?.length) processMedia = next.process as unknown as typeof processMedia
+  if (next.interiors?.length) interiorMedia = next.interiors as unknown as typeof interiorMedia
+  if (next.furniture?.length) furnitureMedia = next.furniture as unknown as typeof furnitureMedia
+  if (next.beyond?.length) beyondMedia = next.beyond as unknown as typeof beyondMedia
+  if (next.design) designPhoto = next.design
+  if (next.construction) constructionPhoto = next.construction
+}
+
+export function applyJourneyPhotos(photos: (Frame | null)[]) {
+  if (!photos.some(Boolean)) return
+  journeyMedia = photos.map((photo, index) => {
+    const current = journeyMedia[index]
+    if (current && photo) return { ...current, photo }
+    if (current) return current
+    return { glyph: 'stage', photo }
+  }) as unknown as typeof journeyMedia
+}

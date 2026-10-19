@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build && node scripts/sitemap.mjs",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "npm run dev --prefix backend",
+    "admin": "npm run dev --prefix admin"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",

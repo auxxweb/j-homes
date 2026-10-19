@@ -1,20 +1,25 @@
 import { useCallback, useState } from 'react'
 import { gallery } from '../../data/media'
+import { readPage } from '../../data/pageCopy'
 import { ImageViewer } from '../ui/ImageViewer'
 import { Photo } from '../ui/Photo'
 import { Container, SectionLabel } from '../ui/SectionLabel'
 
 export function Gallery() {
+  const page = readPage('home')
+  const intro = page.sections[1]
+  const heading = (intro?.heading || 'A closer\nlook.').split('\n')
   return (
     <section id="gallery" className="border-t border-line bg-paper">
       <Container className="pt-20 pb-8 md:pt-28">
         <SectionLabel label="Gallery" />
         <h2 className="display-2 mt-5 max-w-4xl">
-          A closer
-          <span className="block">look.</span>
+          {heading.map((line) => (
+            <span className="block" key={line}>{line}</span>
+          ))}
         </h2>
         <p className="mt-6 max-w-xl text-lg text-ink-soft">
-          Open any frame to see it larger, then move through the set.
+          {intro?.text || 'Open any frame to see it larger, then move through the set.'}
         </p>
       </Container>
       <Container className="pb-20 md:pb-28">

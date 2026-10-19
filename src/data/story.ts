@@ -1,4 +1,4 @@
-export const journey = [
+export let journey = [
   {
     number: '01',
     title: 'Land',
@@ -41,7 +41,7 @@ export const journey = [
   },
 ] as const
 
-export const processSteps = [
+export let processSteps = [
   {
     number: '01',
     title: 'Discover',
@@ -79,7 +79,7 @@ export const processSteps = [
   },
 ] as const
 
-export const landPoints = [
+export let landPoints = [
   {
     title: 'Site evaluation',
     text: 'A first reading of the plot: its shape, its edges, and whether it can carry the home you have in mind.',
@@ -102,7 +102,7 @@ export const landPoints = [
   },
 ] as const
 
-export const drawings = [
+export let drawings = [
   { code: 'A-01', title: 'Architectural plans' },
   { code: 'A-02', title: 'Site plans' },
   { code: 'A-03', title: '3D elevation' },
@@ -114,7 +114,7 @@ export const drawings = [
   { code: 'W-01', title: 'Working drawings' },
 ] as const
 
-export const approvalFlow = [
+export let approvalFlow = [
   {
     title: 'Discuss and plan',
     text: 'The work starts with the client. From that conversation, a plan is drawn for the house.',
@@ -133,7 +133,7 @@ export const approvalFlow = [
   },
 ] as const
 
-export const constructionStages = [
+export let constructionStages = [
   { number: '01', title: 'Foundation', text: 'The house meets the ground and the levels are set.' },
   { number: '02', title: 'Structure', text: 'Columns, beams and slabs establish the frame.' },
   { number: '03', title: 'Masonry', text: 'Walls close the rooms and the volumes become readable.' },
@@ -143,7 +143,7 @@ export const constructionStages = [
   { number: '07', title: 'Finishing', text: 'Surfaces, fittings and the last layer of the build.' },
 ] as const
 
-export const interiorScopes = [
+export let interiorScopes = [
   { title: 'Modular kitchen', text: 'Storage, worktop and the way the kitchen is actually used.' },
   { title: 'Wardrobes', text: 'Bedroom storage drawn to the room, not placed as an afterthought.' },
   { title: 'TV units', text: 'A composed wall for living rooms, with storage where it is needed.' },
@@ -156,7 +156,7 @@ export const interiorScopes = [
   { title: 'Custom furniture', text: 'Pieces made for a wall, a niche or a view that a catalogue cannot fit.' },
 ] as const
 
-export const furniturePieces = [
+export let furniturePieces = [
   { title: 'Sofa', text: 'The piece the living room gathers around.' },
   { title: 'Dining', text: 'A table and chairs scaled to the room that was built.' },
   { title: 'Beds', text: 'Proportion, headboard and the calm of the bedroom.' },
@@ -166,7 +166,7 @@ export const furniturePieces = [
   { title: 'Decor', text: 'The last layer — objects, not clutter.' },
 ] as const
 
-export const qualityPoints = [
+export let qualityPoints = [
   { title: 'Quality materials', text: 'Materials are chosen for the work they have to do, and specified before they reach the site.' },
   { title: 'Stage-wise supervision', text: 'The build is reviewed as it advances, not only at the end.' },
   { title: 'Skilled workmanship', text: 'The people on site are part of the quality of the finished room.' },
@@ -175,7 +175,7 @@ export const qualityPoints = [
   { title: 'Handover', text: 'The home is walked through and handed over as a complete place to live.' },
 ] as const
 
-export const beyondItems = [
+export let beyondItems = [
   { title: 'Landscape', text: 'The ground around the house, shaped so the building has a setting.' },
   { title: 'Gates', text: 'The threshold between the street and the home.' },
   { title: 'Furniture', text: 'Pieces selected for the rooms, not added in a hurry after handover.' },
@@ -185,7 +185,7 @@ export const beyondItems = [
   { title: 'Handover', text: 'You receive a home, not a structure waiting for someone else to finish.' },
 ] as const
 
-export const heroFrames = [
+export let heroFrames = [
   { key: '01', title: 'Canvas', text: 'A clear sheet. The site is still an idea.' },
   { key: '02', title: 'Lines', text: 'The first architectural lines are drawn.' },
   { key: '03', title: 'Plan', text: 'Walls and rooms find their measure on the plot.' },
@@ -197,3 +197,29 @@ export const heroFrames = [
   { key: '09', title: 'Landscape', text: 'The ground around the house is shaped.' },
   { key: '10', title: 'Residence', text: 'From first step to final finish.' },
 ] as const
+
+export function applyStory(next: {
+  journey?: { number: string; title: string; text: string }[]
+  process?: { number: string; title: string; text: string }[]
+  land?: { title: string; text: string }[]
+  drawings?: { code: string; title: string }[]
+  approvals?: { title: string; text: string }[]
+  construction?: { number: string; title: string; text: string }[]
+  interiors?: { title: string; text: string }[]
+  furniture?: { title: string; text: string }[]
+  quality?: { title: string; text: string }[]
+  beyond?: { title: string; text: string }[]
+  hero?: { key: string; title: string; text: string }[]
+}) {
+  if (next.journey?.length) journey = next.journey as unknown as typeof journey
+  if (next.process?.length) processSteps = next.process as unknown as typeof processSteps
+  if (next.land?.length) landPoints = next.land as unknown as typeof landPoints
+  if (next.drawings?.length) drawings = next.drawings as unknown as typeof drawings
+  if (next.approvals?.length) approvalFlow = next.approvals as unknown as typeof approvalFlow
+  if (next.construction?.length) constructionStages = next.construction as unknown as typeof constructionStages
+  if (next.interiors?.length) interiorScopes = next.interiors as unknown as typeof interiorScopes
+  if (next.furniture?.length) furniturePieces = next.furniture as unknown as typeof furniturePieces
+  if (next.quality?.length) qualityPoints = next.quality as unknown as typeof qualityPoints
+  if (next.beyond?.length) beyondItems = next.beyond as unknown as typeof beyondItems
+  if (next.hero?.length) heroFrames = next.hero as unknown as typeof heroFrames
+}

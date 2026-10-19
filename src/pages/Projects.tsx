@@ -5,11 +5,13 @@ import { Seo } from '../components/layout/Seo'
 import { ImageViewer } from '../components/ui/ImageViewer'
 import { Container } from '../components/ui/SectionLabel'
 import { formatCent, formatSqFt, projects } from '../data/projects'
+import { readPage } from '../data/pageCopy'
 import { breadcrumbLd, graphLd, organizationLd } from '../lib/seo'
 
 export default function Projects() {
   const [open, setOpen] = useState<number | null>(null)
   const close = useCallback(() => setOpen(null), [])
+  const page = readPage('projects')
   const frames = projects.flatMap((project) => project.images)
   const crumbs = [
     { name: 'Home', path: '/' },
@@ -18,15 +20,15 @@ export default function Projects() {
   return (
     <>
       <Seo
-        title="Homes by J Homes | Residential Projects in Kerala"
-        description="Residential projects by J Homes in Mulanthuruthy, Eruveli, Thiruvaniyoor, Changanassery and Chottanikkara."
+        title={page.seoTitle}
+        description={page.seoDescription}
         path="/projects"
         jsonLd={graphLd([organizationLd(), breadcrumbLd(crumbs)])}
       />
       <PageHero
-        kicker="Projects"
-        title="Homes we’ve brought to life."
-        lede="Each record lists the place, the floors, the built-up area and the land. Open an image to see it larger."
+        kicker={page.kicker}
+        title={page.title}
+        lede={page.lede}
         crumbs={[
           { label: 'Home', to: '/' },
           { label: 'Projects' },

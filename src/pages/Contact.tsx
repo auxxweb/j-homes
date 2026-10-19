@@ -3,11 +3,13 @@ import { PageHero } from '../components/layout/PageHero'
 import { Seo } from '../components/layout/Seo'
 import { Container } from '../components/ui/SectionLabel'
 import { company } from '../data/company'
+import { readPage } from '../data/pageCopy'
 import { whatsappUrl } from '../lib/enquiry'
 import { breadcrumbLd, graphLd, organizationLd } from '../lib/seo'
 import { track } from '../lib/analytics'
 
 export default function Contact() {
+  const page = readPage('contact')
   const crumbs = [
     { name: 'Home', path: '/' },
     { name: 'Contact', path: '/contact' },
@@ -16,15 +18,15 @@ export default function Contact() {
   return (
     <>
       <Seo
-        title="Start Your Project | J Homes Kochi"
-        description="Tell J Homes where you are in your home journey. Land, design, construction or a complete turnkey residence in Kochi and Kerala."
+        title={page.seoTitle}
+        description={page.seoDescription}
         path="/contact"
         jsonLd={graphLd([organizationLd(), breadcrumbLd(crumbs)])}
       />
       <PageHero
-        kicker="Contact"
-        title="Let’s build your home."
-        lede="Tell us where you are in your journey. We’ll help you understand the next step."
+        kicker={page.kicker}
+        title={page.title}
+        lede={page.lede}
         crumbs={[
           { label: 'Home', to: '/' },
           { label: 'Contact' },

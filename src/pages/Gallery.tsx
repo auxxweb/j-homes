@@ -1,10 +1,12 @@
 import { ClosingCta, PageHero } from '../components/layout/PageHero'
 import { Seo } from '../components/layout/Seo'
+import { readPage } from '../data/pageCopy'
 import { GalleryFrames } from '../components/sections/Gallery'
 import { Container } from '../components/ui/SectionLabel'
 import { breadcrumbLd, graphLd, organizationLd } from '../lib/seo'
 
 export default function GalleryPage() {
+  const page = readPage('gallery')
   const crumbs = [
     { name: 'Home', path: '/' },
     { name: 'Gallery', path: '/gallery' },
@@ -12,15 +14,15 @@ export default function GalleryPage() {
   return (
     <>
       <Seo
-        title="Gallery | J Homes Residences"
-        description="A closer look at J Homes elevation studies. Open any frame to see it larger."
+        title={page.seoTitle}
+        description={page.seoDescription}
         path="/gallery"
         jsonLd={graphLd([organizationLd(), breadcrumbLd(crumbs)])}
       />
       <PageHero
-        kicker="Gallery"
-        title="A closer look."
-        lede="Open any frame to see it larger, then move through the set."
+        kicker={page.kicker}
+        title={page.title}
+        lede={page.lede}
         crumbs={[
           { label: 'Home', to: '/' },
           { label: 'Gallery' },

@@ -40,6 +40,7 @@ const paths = [
   '/before-after',
   '/gallery',
   '/contact',
+  '/checklist',
   '/blog',
   '/blog/planning-a-home-in-kochi',
   '/blog/what-a-turnkey-home-includes',

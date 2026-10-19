@@ -1,12 +1,20 @@
 import { useEffect, useState } from 'react'
-import type { JournalArticle } from '../data/journal'
+import { articles as bundledArticles, type JournalArticle } from '../data/journal'
+import { cmsApi } from '../cms/CmsProvider'
+import { subscribeCms } from '../cms/applyCms'
 import { journalSnapshot, loadJournal } from './journalSheet'
 
 export function useJournal() {
-  const [articles, setArticles] = useState<JournalArticle[]>(journalSnapshot)
-  const [settled, setSettled] = useState(false)
+  const [articles, setArticles] = useState<JournalArticle[]>(cmsApi() ? bundledArticles : journalSnapshot)
+  const [settled, setSettled] = useState(Boolean(cmsApi()))
 
   useEffect(() => {
+    if (cmsApi()) {
+      return subscribeCms(() => {
+        setArticles(bundledArticles)
+        setSettled(true)
+      })
+    }
     let cancel = false
     loadJournal().then((next) => {
       if (cancel) return

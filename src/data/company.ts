@@ -5,7 +5,7 @@ function clean(value: string | undefined) {
 const phone = clean(import.meta.env.VITE_PHONE) || '917907938664'
 const phoneDisplay = clean(import.meta.env.VITE_PHONE_DISPLAY) || '+91 7907938664'
 
-export const company = {
+export let company = {
   name: 'J Homes',
   tagline: 'Design · Construction · Interiors',
   disciplines: ['Design', 'Construction', 'Interiors'] as const,
@@ -49,11 +49,12 @@ export const company = {
     width: 900,
     height: 974,
   },
+  brochure: '/brochure/j-homes-brochure.pdf',
   whatsappMessage:
     "Hi J Homes, I'm interested in building my home. I'd like to discuss my project.",
-} as const
+}
 
-export const servicePlaces = [
+export let servicePlaces = [
   'Kochi',
   'Ernakulam',
   'Mulanthuruthy',
@@ -61,4 +62,39 @@ export const servicePlaces = [
   'Thiruvaniyoor',
   'Changanassery',
   'Chottanikkara',
-] as const
+]
+
+export function applyCompanySettings(settings: {
+  name?: string
+  tagline?: string
+  promise?: string
+  lines?: string[]
+  experienceYears?: number
+  completedProjects?: number
+  whatsappMessage?: string
+  contact?: Partial<(typeof company)['contact']>
+  area?: Partial<(typeof company)['area']>
+  logo?: Partial<(typeof company)['logo']>
+  brochure?: string
+  servicePlaces?: string[]
+}) {
+  company = {
+    ...company,
+    name: settings.name || company.name,
+    tagline: settings.tagline || company.tagline,
+    promise: settings.promise || company.promise,
+    lines: settings.lines?.length ? settings.lines : company.lines,
+    experienceYears: settings.experienceYears || company.experienceYears,
+    completedProjects: settings.completedProjects || company.completedProjects,
+    whatsappMessage: settings.whatsappMessage || company.whatsappMessage,
+    contact: {
+      ...company.contact,
+      ...settings.contact,
+      address: settings.contact?.address?.length ? settings.contact.address : company.contact.address,
+    },
+    area: { ...company.area, ...settings.area },
+    logo: { ...company.logo, ...settings.logo },
+    brochure: settings.brochure || company.brochure,
+  }
+  if (settings.servicePlaces?.length) servicePlaces = settings.servicePlaces
+}

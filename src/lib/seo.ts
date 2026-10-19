@@ -7,7 +7,17 @@ export function siteOrigin() {
   return ''
 }
 
+export function checklistPath() {
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '')
+  return `${base}/checklist`
+}
+
+export function checklistUrl() {
+  return absoluteUrl(checklistPath())
+}
+
 export function absoluteUrl(path: string) {
+  if (/^https?:\/\//.test(path)) return path
   const origin = siteOrigin()
   const normalized = path.startsWith('/') ? path : `/${path}`
   return origin ? `${origin}${normalized}` : normalized
