@@ -41,7 +41,7 @@ jobs:
           VITE_CHECKLIST_ENDPOINT: https://script.google.com/macros/s/AKfycbw8LV8rXrezJb__YgMQ1SDz37iDzKnfZGbKI45elmPhkCRMXWYw_pz5eRpALlceN_1wWQ/exec
           VITE_CHECKLIST_TOKEN: PASTE_A_LONG_RANDOM_TOKEN
           VITE_JOURNAL_ENDPOINT: https://script.google.com/macros/s/AKfycbxlEkOakBkJKfH-tRqynVJMw44MR3pT-WT9IxYjE8DQVtUkK1oBUCCCKVn3JU0Ytfra/exec
-          VITE_CMS_API: ${{ secrets.VITE_CMS_API || 'https://server.jhomes.in' }}
+          VITE_CMS_API: https://server.jhomes.in
           VITE_CMS_SITE: j-homes
           VITE_GA_ID: ${{ secrets.VITE_GA_ID }}
         run: npm run build

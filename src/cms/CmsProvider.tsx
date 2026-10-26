@@ -2,7 +2,9 @@ import { useEffect, useState, type ReactNode } from 'react'
 import { applyCms, publishCms, subscribeCms, type CmsPayload } from './applyCms'
 
 export function cmsApi() {
-  return (import.meta.env.VITE_CMS_API ?? '').trim().replace(/\/$/, '')
+  const configured = (import.meta.env.VITE_CMS_API ?? '').trim()
+  const fallback = import.meta.env.PROD ? 'https://server.jhomes.in' : ''
+  return (configured || fallback).replace(/\/$/, '')
 }
 
 export function cmsSite() {
@@ -18,7 +20,7 @@ export function CmsProvider({ children }: { children: ReactNode }) {
     const endpoint = cmsApi()
     if (!endpoint) return
     const controller = new AbortController()
-    fetch(`${endpoint}/api/public/${cmsSite()}`, { signal: controller.signal })
+    fetch(`${endpoint}/api/public/${cmsSite()}?t=${Date.now()}`, { signal: controller.signal, cache: 'no-store' })
       .then((response) => response.json())
       .then((payload: CmsPayload & { ok?: boolean }) => {
         if (!payload?.ok) return
